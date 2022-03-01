@@ -1,6 +1,4 @@
 *.pyc
-static/
-static/
 project/project/__pycache__/*.pyc
 logs/
 db.sqlite3
@@ -13,7 +11,6 @@ Dockerfile
 docker-compose.yml
 #docker-entrypoint.local.sh
 postgres-data/
-/static/
 /media/
 /postgres-data
 # C extensions
