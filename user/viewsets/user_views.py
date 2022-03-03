@@ -4,11 +4,19 @@ from user.forms import UserRegisterationForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 
 
+class HomeView(TemplateView):
+    """
+    Home view
+    """
+
+    template_name = "user/index.html"
+
+
 class LoginView(TemplateView):
     template_name = "user/login.html"
     form_class = UserLoginForm
     success_url = "/"
-    
+
     def form_valid(self, form):
         username = form.cleaned_data["username"]
         password = form.cleaned_data["password"]
