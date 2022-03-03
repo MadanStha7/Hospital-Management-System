@@ -1,61 +1,143 @@
-body {
-    background-color: rgb(255, 255, 255)
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.card {
-    width: 400px;
-    border: none
+.container {
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  background: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
 }
 
-.btr {
-    border-top-right-radius: 5px !important
+.container .form-1 {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  width: 40%;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3);
 }
 
-.btl {
-    border-top-left-radius: 5px !important
+.form-1 h1 {
+  text-align: center;
+  margin-top: 0.7rem;
+  margin-bottom: 1.5rem;
 }
 
-.btn-dark {
-    color: #fff;
-    background-color: #0d6efd;
-    border-color: #0d6efd
+input[type="email"],
+input[type="password"] {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid;
+  background: none;
+  margin: 0.9rem 2rem;
+  font-size: 1rem;
 }
 
-.btn-dark:hover {
-    color: #fff;
-    background-color: #0d6efd;
-    border-color: #0d6efd
+label {
+  margin: 0 2rem;
 }
 
-.nav-pills {
-    display: table !important;
-    width: 100%
+span {
+  margin: 0 2rem;
+  color: blue;
+  cursor: pointer;
 }
 
-.nav-pills .nav-link {
-    border-radius: 0px;
-    border-bottom: 1px solid #0d6efd40
+button {
+  margin: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bolder;
+  color: #fff;
+  background: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
 }
 
-.nav-item {
-    display: table-cell;
-    background: #0d6efd2e
+/* ........///Sign-Up///......... */
+
+p {
+  text-align: center;
+  font-weight: bolder;
 }
 
-.form {
-    padding: 10px;
-    height: 400px
+.icons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  margin-top: 0.5rem;
 }
 
-.form input {
-    margin-bottom: 12px;
-    border-radius: 3px
+.icons a {
+  text-decoration: none;
+  font-size: 1rem;
+  margin: 0.2rem;
 }
 
-.form input:focus {
-    box-shadow: none
+.icons .fa-facebook-f {
+  border-radius: 50%;
+  background: #5d75ab;
+  color: #fff;
+  padding: 1rem;
 }
 
-.form button {
-    margin-top: 20px
+.icons .fa-twitter {
+  border-radius: 50%;
+  background: #1da1f2;
+  color: white;
+  padding: 1rem;
+}
+
+.icons .fa-google {
+  border-radius: 50%;
+  background: #ee5645;
+  color: #fff;
+  padding: 1rem;
+}
+
+/* ....///Media query///..... */
+
+@media (max-width: 501px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container .form-1 {
+    width: 300px;
+  }
+}
+
+@media (min-width: 501px) and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .container .form-1 {
+    width: 450px;
+  }
+}
+
+@media (min-width: 765px) and (max-width: 1200px) {
+  html {
+    font-size: 18px;
+  }
+
+  .container .form-1 {
+    width: 540px;
+    height: 550px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .container {
+    height: 100vmax;
+  }
 }
