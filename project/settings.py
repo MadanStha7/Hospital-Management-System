@@ -38,6 +38,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+AUTH_USER_MODEL = "user.UserProfile"
 
 ROOT_URLCONF = "project.urls"
 

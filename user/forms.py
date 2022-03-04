@@ -1,27 +1,68 @@
 from django import forms
-from .models import Profile
+from .models import UserProfile
 from django.forms import ValidationError
+from django.forms import DateInput
+
+
+class DateInput(forms.DateInput):
+    input_type = "date"
 
 
 class UserRegisterationForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"})
-    )
-    confirm_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"})
-    )
-
     class Meta:
-        model = Profile
-        fields = [
-            "username",
-            "password",
-            "confirm_password",
-            "user_type",
-            "phone_number",
-            "profile_pic",
-        ]
+        model = UserProfile
+        exclude = ["is_staff", "is_active", "date_joined"]
+
+        def __init__(self, *args, **kwargs):
+            super(UserRegisterationForm, self).__init__(*args, **kwargs)
+            for field in self.fields:
+                self.fields[field].error_messages = {
+                    "required": "This Field is required"
+                }
+
+        widgets = {
+            "email": forms.EmailInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "password": forms.PasswordInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "full_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "phone": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "blood_group": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "shift": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "dob": DateInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "user_type": forms.Select(
+                attrs={
+                    "class": "form-control",
+                    "onchange": "onchangeUserType(this.value)",
+                }
+            ),
+        }
 
 
 class UserLoginForm(forms.Form):
