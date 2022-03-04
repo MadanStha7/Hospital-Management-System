@@ -1,11 +1,11 @@
-from django.db import models
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView
+from django.shortcuts import redirect, render
+from django.views.generic import TemplateView, CreateView, FormView
 from user.forms import UserRegisterationForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from user.models import UserProfile
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 
 class HomeView(TemplateView):
@@ -16,29 +16,26 @@ class HomeView(TemplateView):
     template_name = "user/index.html"
 
 
-class LoginView(TemplateView):
+class LoginView(FormView):
     template_name = "user/login.html"
     form_class = UserLoginForm
-    success_url = "/"
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-        username = form.cleaned_data["username"]
+        email = form.cleaned_data["email"]
         password = form.cleaned_data["password"]
-        user = authenticate(username=username, password=password)
-        self.thisuser = user
+        user = authenticate(username=email, password=password)
         if user is not None:
             login(self.request, user)
+            return HttpResponseRedirect(self.success_url)
+
         else:
-            return render(
+            messages.add_message(
                 self.request,
-                self.template_name,
-                {"form": form, "error": "Invalid Credentials"},
+                messages.INFO,
+                "Wrong credentials, please try again!",
             )
-        return super().form_valid(form)
-
-
-class RegisterView(TemplateView):
-    template_name = "user/register.html"
+            return HttpResponseRedirect(reverse_lazy("login"))
 
 
 class RegisterView(CreateView):
@@ -49,7 +46,6 @@ class RegisterView(CreateView):
     def post(self, request):
         user_form = UserRegisterationForm(request.POST, request.FILES)
         if user_form.is_valid():
-            print("user form", user_form.data)
             newuser = UserProfile(
                 email=user_form.data["email"],
                 password=user_form.data["password"],
@@ -63,12 +59,16 @@ class RegisterView(CreateView):
             )
             print("user", newuser)
             newuser.save()
-            messages.success(request, "User has been successful Created")
-            return reverse_lazy("home")
+            messages.success(request, "User has been successfully Created")
+            return redirect("login")
 
         else:
-            print("forms error", user_form.errors)
-            print(user_form.errors.as_json())
             book_form1 = user_form
             context = {"form": book_form1}
         return render(request, "user/register.html", context)
+
+
+def Logout(request):
+    """logout logged in user"""
+    logout(request)
+    return HttpResponseRedirect(reverse_lazy("home"))
