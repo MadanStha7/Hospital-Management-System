@@ -32,7 +32,8 @@
 
   <body class="hold-transition sidebar-mini" id="trimestersdata">
     <div class="wrapper">
-      {% include 'layout/admin/header.html' %}
+      {% if request.user.is_patient %} {% include 'patient/patient-header.html' %} {% elif request.user.is_patient %} {% else %} {% include
+      'layout/admin/header.html' %} {% endif %}
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">

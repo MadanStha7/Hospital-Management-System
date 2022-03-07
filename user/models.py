@@ -49,17 +49,13 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     @property
-    def is_unit_chief(self):
-        print("designation", self.designation)
-        return self.user_type == "1"
+    def is_patient(self):
+        return self.user_type == "P"
 
     @property
-    def is_engineer(self):
-        return self.user_type == "2"
-
-    @property
-    def is_engineer(self):
-        return self.user_type == "3"
+    def is_doctor(self):
+        print("user type", self.user_type)
+        return self.user_type == "D"
 
     def __str__(self):
         return f"{self.email}--{self.user_type}"
