@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractBaseUser, PermissionsMixin
-from .managers import CustomUserManager
+from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 
@@ -15,7 +14,7 @@ SHIFT = (
 )
 
 
-class UserProfile(AbstractBaseUser, PermissionsMixin):
+class UserProfile(AbstractUser):
     """
     Model to store the details of user as there are three types of user(doctor,patient,admin)
     """
@@ -37,7 +36,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         choices=USER_TYPE,
         max_length=2,
     )
-    image = models.ImageField(upload_to="userprofile", null=True, blank=True)
+    image = models.ImageField(upload_to="user-profile")
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -45,8 +44,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
 
     @property
     def is_patient(self):
@@ -58,4 +55,4 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return self.user_type == "D"
 
     def __str__(self):
-        return f"{self.email}--{self.user_type}"
+        return f"{self.email}--{self.get_user_type_display()}"

@@ -41,7 +41,7 @@ MIDDLEWARE = [
 AUTH_USER_MODEL = "user.UserProfile"
 
 ROOT_URLCONF = "project.urls"
-AUTH_USER_MODEL = 'user.UserProfile'
+AUTH_USER_MODEL = "user.UserProfile"
 
 TEMPLATES = [
     {
@@ -110,15 +110,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root') 
-
-
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_cdn"),
 ]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'media_root')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 MEDIAFILES_DIRS = [
     os.path.join(BASE_DIR, "media_cdn"),
 ]
 MEDIA_URL = "/media/"
-

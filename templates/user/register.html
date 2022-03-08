@@ -27,7 +27,11 @@
         </li>
       </ul>
       <div class="tab-content" id="pills-tabContent">
-        <form method="POST" action="{% url 'register' %}">
+        <form
+          method="POST"
+          action="{% url 'register' %}"
+          enctype="multipart/form-data"
+        >
           {% csrf_token %}
           <div
             class="tab-pane fade show active"
