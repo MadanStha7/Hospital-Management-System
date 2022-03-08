@@ -1,6 +1,8 @@
 {% load static %}
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand bg-white text-dark navbar-light border-bottom">
+<nav
+  class="main-header navbar navbar-expand bg-white text-dark navbar-light border-bottom"
+>
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" data-widget="pushmenu" href="#"
@@ -42,7 +44,10 @@
         data-accordion="false"
       >
         <li class="nav-item">
-          <a href="" class="nav-link">
+          <a
+            href=""
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}"
+          >
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-home"></i>
               Profile

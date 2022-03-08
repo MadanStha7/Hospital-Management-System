@@ -42,6 +42,10 @@ class LoginView(FormView):
 
 
 class RegisterView(CreateView):
+    """
+    View to store the details of doctor and patient
+    """
+
     template_name = "user/register.html"
     form_class = UserRegisterationForm
     success_url = reverse_lazy("login")
@@ -49,21 +53,11 @@ class RegisterView(CreateView):
     def post(self, request):
         user_form = UserRegisterationForm(request.POST, request.FILES)
         if user_form.is_valid():
-            newuser = UserProfile(
-                email=user_form.data["email"],
-                full_name=user_form.data["full_name"],
-                phone=user_form.data["phone"],
-                dob=user_form.data["dob"],
-                blood_group=user_form.data["blood_group"],
-                image=user_form.data["image"],
-                user_type=user_form.data["user_type"],
-            )
-            if user_form.data.get("shift"):
-                newuser.shift = user_form.data["shift"]
-            # creating object in db
-            if user_form.data["password"]:
-                newuser.set_password(user_form.data["password"])
-            newuser.save()
+            user = user_form.save(commit=False)
+            password = user_form.cleaned_data["password"]
+            #  Use set_password here
+            user.set_password(password)
+            user.save()
             messages.success(request, "User has been successfully Created")
             return redirect("login")
 
@@ -74,7 +68,7 @@ class RegisterView(CreateView):
 
 
 def Logout(request):
-    """logout logged in user"""
+    """logout out user"""
     logout(request)
     return HttpResponseRedirect(reverse_lazy("home"))
 
@@ -88,6 +82,6 @@ class PatientDashboard(TemplateView):
         try:
             user = UserProfile.objects.get(id=self.request.user.id)
         except UserProfile.DoesNotExist:
-            user = None          
-        context["user"] = user 
+            user = None
+        context["user"] = user
         return context
