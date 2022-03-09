@@ -1,14 +1,16 @@
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, CreateView, FormView
-from user.forms import UserRegisterationForm, UserLoginForm
-from django.contrib.auth import authenticate, login, logout
+from user.forms import PatientForm, DoctorForm, UserLoginForm
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
-from user.forms import UserLoginForm, UserRegisterationForm
-from user.models import UserProfile
+from django.db import transaction
+from user.models import Patient, Doctor
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+
+User = get_user_model()
 
 
 class HomeView(TemplateView):
@@ -17,6 +19,10 @@ class HomeView(TemplateView):
     """
 
     template_name = "user/index.html"
+
+
+class RegisterTypeView(TemplateView):
+    template_name = "user/register-type.html"
 
 
 class LoginView(FormView):
@@ -41,30 +47,64 @@ class LoginView(FormView):
             return HttpResponseRedirect(reverse_lazy("login"))
 
 
-class RegisterView(CreateView):
+class PatientRegisterView(CreateView):
     """
-    View to store the details of doctor and patient
+    View to store the details of patient
     """
 
-    template_name = "user/register.html"
-    form_class = UserRegisterationForm
+    template_name = "user/patient-register.html"
+    form_class = PatientForm
     success_url = reverse_lazy("login")
 
+    @transaction.atomic
     def post(self, request):
-        user_form = UserRegisterationForm(request.POST, request.FILES)
-        if user_form.is_valid():
-            user = user_form.save(commit=False)
-            password = user_form.cleaned_data["password"]
-            #  Use set_password here
-            user.set_password(password)
+        form = PatientForm(request.POST, request.FILES)
+        if form.is_valid():
+            email = form.data.get("email")
+            pword = form.data.get("password")
+            user_obj = User.objects.create_user(
+                email=email, username=email, password=pword
+            )
+            user = form.save(commit=False)
+            user.user = user_obj
             user.save()
             messages.success(request, "User has been successfully Created")
             return redirect("login")
 
         else:
-            book_form1 = user_form
-            context = {"form": book_form1}
-        return render(request, "user/register.html", context)
+            user_form = form
+            context = {"form": user_form}
+        return render(request, "user/patient-register.html", context)
+
+
+class DoctorRegisterView(CreateView):
+    """
+    View to store the details of doctor
+    """
+
+    template_name = "user/doctor-register.html"
+    form_class = DoctorForm
+    success_url = reverse_lazy("login")
+
+    @transaction.atomic
+    def post(self, request):
+        form = DoctorForm(request.POST, request.FILES)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            pword = form.cleaned_data["password"]
+            user_obj = User.objects.create_user(
+                email=email, username=email, password=pword
+            )
+            user = form.save(commit=False)
+            user.user = user_obj
+            user.save()
+            messages.success(request, "User has been successfully Created")
+            return redirect("login")
+
+        else:
+            user_form = form
+            context = {"form": user_form}
+        return render(request, "user/doctor-register.html", context)
 
 
 def Logout(request):
@@ -80,8 +120,8 @@ class PatientDashboard(TemplateView):
         context = super().get_context_data(**kwargs)
 
         try:
-            user = UserProfile.objects.get(id=self.request.user.id)
-        except UserProfile.DoesNotExist:
+            user = Patient.objects.get(user=self.request.user)
+        except Patient.DoesNotExist:
             user = None
         context["user"] = user
         return context

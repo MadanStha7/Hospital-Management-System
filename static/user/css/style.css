@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -140,4 +140,8 @@ p {
   .container {
     height: 100vmax;
   }
+}
+
+.register-type {
+  background: url("../image/dr.jpeg");
 }
