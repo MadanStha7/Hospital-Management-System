@@ -54,7 +54,7 @@
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'admin/js/popper.js' %}"></script>
     <!-- Bootstrap 4 -->
     <script src="{% static 'admin/js/bootstrap.js' %}"></script>
@@ -85,14 +85,6 @@
         .removeClass("active")
         .end()
         .addClass("active");
-
-      // #sucess messages hide
-      setTimeout(function(){$('#messages').fadeOut();}, 3000);
-      {% comment %} var message_ele = document.getElementById("messages");
-      console.log("message_ele", message_ele);
-      setTimeout(function () {
-        message_ele.style.display = "none";
-      }, 3000); {% endcomment %}
       // Timeout is 3 sec, you can change it
     </script>
     {% block script%}{% endblock %}

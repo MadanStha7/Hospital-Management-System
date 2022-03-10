@@ -1,6 +1,7 @@
 {% extends 'layout/admin/base.html' %}
 <!-- load -->
 {% load static %}
+
 <!-- title -->
 {% block title %}patient-dashboard{% endblock %}
 <!-- content -->
@@ -22,41 +23,10 @@
     </div>
   </div>
 </div>
-<!-- Main content -->
-<div id="root">
-  <!-- Main -->
-          <div class="card">
-
-           
-            </div>
-                <div class="col-md-4" style="margin-left:30em;margin-bottom:20px">
-                  <h1 class="card-title text-center text-bold">My Profile</h1>
-                  <div class="card card-01">
-                      <div class="profile-box">
-                          {% if user.image %}
-                            {% comment %} <img class="card-img-top rounded-circle" src="{{user.image.url}}" alt="Card image cap"> {% endcomment %}
-                          
-                            <img class="card-img-top rounded-circle w-75 ps-3 pt-4 ml-5 h-75" src="{{user.image.url}}" alt="Card image cap" height="80%" width="80%">
-
-                          {% endif %}
-                      </div>
-                    <hr style="width:50%">
-                  <div class="card-body" style="margin-bottom:100px">
-                      <h4 class="card-title">
-                        <i class="fa fa-user"></i>&nbsp;{{user.full_name}}</h4>
-                      <h4 class="card-title"><i class="fa fa-envelope"></i>&nbsp;{{user.user.email}}</h4>
-                      <h4 class="card-title"><i class="fa fa-phone"></i>&nbsp;{{user.phone}}</h4>
-                      <h4 class="card-title"><i class="fa fa-plus"></i>&nbsp;{{user.blood_group}}</h4>
-                      <h4 class="card-title"><i class="fa fa-calendar"></i>&nbsp;{{user.dob}}</h4>
-
-                     
-                  </div>
-                </div>  
-          </div>
-        </section>   
-  <!-- End -->
+<div class="root">
 </div>
 {% endblock %} {% block script %}
-<script src="{% static 'admin/js/Chart.min.js' %}"></script>
+<script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
 
 {% endblock %}

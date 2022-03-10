@@ -16,7 +16,7 @@
         <i class="fas fa-user"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right">
-        <a href="" class="dropdown-item"> Profile </a>
+        <a href="" class="dropdown-item"> Profiles </a>
 
         <a href="" class="dropdown-item"> Logout </a>
       </div>
@@ -36,62 +36,60 @@
   <div class="sidebar bg-dark text-white">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-      {% with request.resolver_match.url_name as url_name %}
       <ul
         class="nav nav-pills nav-sidebar flex-column"
         data-widget="treeview"
         role="menu"
-        data-accordion="false"
-      >
-        <li class="nav-item">
-          <a
-            href=""
-            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}"
-          >
-            <p class="h6">
-              <i class="t-nav-icon nav-icon fa fa-home"></i>
-              Profile
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link">
-            <i class="t-nav-icon nav-icon fa fa-id-card"></i>
-            <p class="h6">Appointments</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link">
-            <i class="t-nav-icon nav-icon fa fa-credit-card"></i>
-            <p class="h6">Card Requests</p>
-          </a>
-        </li>
-        <li class="nav-item has-treeview menu-open">
+        data-accordion="false">
+        <li class="nav-item menu-open">
           <a href="#" class="nav-link">
-            <i class="nav-icon t-nav-icon far fa-file-alt"></i>
+            <i class="t-nav-icon nav-icon fa fa-address-book"></i>
             <p>
-              Document/ Data
+              Dashboard
               <i class="right fa fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="" class="nav-link">
-                <i class="nav-icon t-nav-icon fas fa-file-alt"></i>
-                <p>Add Document Category</p>
+                <i class="t-nav-icon nav-icon fa fa-id-card"></i>
+                <p>Appointment</p>
               </a>
             </li>
-
+          </ul>
+          <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="" class="nav-link">
-                <i class="nav-icon t-nav-icon fas fa-file-alt"></i>
-                <p>Document</p>
+                <i class="t-nav-icon nav-icon fa fa-id-card"></i>
+                <p>Prescriptions</p>
               </a>
             </li>
           </ul>
         </li>
+        
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="t-nav-icon nav-icon fa fa-id-card"></i>
+            <p class="h6">Card</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href=""
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            <p class="h6">
+              <i class="t-nav-icon nav-icon fa fa-user"></i>
+              Profile
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="t-nav-icon nav-icon fa fa-credit-card"></i>
+            <p class="h6">Change password</p>
+          </a>
+        </li>
       </ul>
-      {% endwith %}
     </nav>
     <!-- /.sidebar-menu -->
   </div>
