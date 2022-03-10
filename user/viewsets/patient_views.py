@@ -36,7 +36,10 @@ class LoginView(FormView):
         user = authenticate(username=email, password=password)
         if user is not None:
             login(self.request, user)
-            return HttpResponseRedirect(self.success_url)
+            if User.objects.filter(groups__name="Patient"):
+                return HttpResponseRedirect(reverse_lazy("patient-dashboard"))
+            elif User.objects.filter(groups__name="Doctor"):
+                return HttpResponseRedirect(reverse_lazy("home"))
 
         else:
             messages.add_message(

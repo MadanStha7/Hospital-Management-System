@@ -29,19 +29,36 @@ class Patient(models.Model):
     Model to store the patients details
     """
 
+    BLOOD_GROUP = [
+        ("-A", "-A"),
+        ("+A", "+A"),
+        ("-B", "-B"),
+        ("+B", "+B"),
+        ("-AB", "-AB"),
+        ("+AB", "+AB"),
+        ("-O", "-O"),
+        ("+O", "+O"),
+    ]
+
+    GENDER = [
+        ("Male", "Male"),
+        ("Female", "Female"),
+        ("Other", "Other"),
+    ]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient")
     full_name = models.CharField(("Full Name"), max_length=50)
+    health_uid = models.CharField(max_length=16, null=True, blank=True)
     phone = models.CharField(max_length=15)
-    blood_group = models.CharField(max_length=15, blank=True, null=True)
     dob = models.DateField(("Date of birth"), null=True)
-    image = models.ImageField(upload_to="patient")
+    blood_group = models.CharField(choices=BLOOD_GROUP, max_length=5, null=True)
+    gender = models.CharField(max_length=100, choices=GENDER, null=True)
+    image = models.ImageField(upload_to="patient", null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         group, created = Group.objects.get_or_create(name="Patient")
-        print("GROUP", group)
-        print("user", self.user)
         self.user.groups.add(group)
         super().save(*args, **kwargs)
 
@@ -63,14 +80,18 @@ class Doctor(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="doctor")
+    status = models.CharField(max_length=100, null=True, blank=True)
     full_name = models.CharField(("Full Name"), max_length=50)
     hospital_name = models.CharField(("Hospital Name"), max_length=80)
     phone = models.CharField(max_length=15)
-    blood_group = models.CharField(max_length=15, blank=True, null=True)
     shift = models.CharField(choices=SHIFT, max_length=2, null=True, blank=True)
     location = models.CharField(max_length=100)
     dob = models.DateField(("Date of birth"), null=True)
     image = models.ImageField(upload_to="patient")
+    experience = models.CharField(max_length=100, null=True)
+    specialist = models.CharField(max_length=100, null=True)
+    clinic = models.CharField(max_length=100, null=True, blank=True)
+    timing = models.CharField(max_length=100, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now_add=True)
 

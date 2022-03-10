@@ -18,22 +18,23 @@ class PatientForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
     full_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     phone = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-    blood_group = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control"})
-    )
-    dob = forms.CharField(widget=DateInput(attrs={"class": "form-control"}))
+
+    # dob = forms.CharField(widget=DateInput(attrs={"class": "form-control"}))
 
     class Meta:
         model = Patient
         fields = [
             "email",
             "password",
+            "confirm_password",
             "full_name",
             "phone",
             "blood_group",
-            "dob",
             "image",
         ]
 
@@ -44,11 +45,27 @@ class PatientForm(forms.ModelForm):
                     "required": "This Field is required"
                 }
 
+        widgets = {
+            "blood_group": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            )
+        }
+
     def clean_email(self):
         email = User.objects.filter(email=self.cleaned_data.get("email"))
         if email.exists():
             raise forms.ValidationError("email already exist")
         return email
+
+    # check the password match
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get("password")
+        confirm_password = self.cleaned_data.get("confirm_password")
+        if password != confirm_password:
+            raise forms.ValidationError("password didnot match")
+        return confirm_password
 
 
 class DoctorForm(forms.ModelForm):
@@ -62,7 +79,9 @@ class DoctorForm(forms.ModelForm):
         widget=forms.TextInput(attrs={"class": "form-control"})
     )
     location = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-    hospital_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    hospital_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
     dob = forms.CharField(widget=DateInput(attrs={"class": "form-control"}))
 
     class Meta:
@@ -72,7 +91,6 @@ class DoctorForm(forms.ModelForm):
             "password",
             "full_name",
             "phone",
-            "blood_group",
             "dob",
             "image",
             "shift",
