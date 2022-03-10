@@ -117,7 +117,7 @@ def Logout(request):
 
 
 class PatientDashboard(TemplateView):
-    template_name = "patient/patient-dashboard.html"
+    template_name = "patient/appointment.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

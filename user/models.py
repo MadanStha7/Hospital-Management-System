@@ -105,3 +105,28 @@ class Doctor(models.Model):
 
     class Meta:
         ordering = ["-id"]
+
+
+
+class Appointment(models.Model):
+    """
+    Model to store the appointment records between doctors and patient
+    """
+    STATUS = (
+        ("P", "Pending"),
+        ("A", "Approve"),
+    )
+
+    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE,related_name="appointment")
+    patient = models.ForeignKey(Patient,on_delete=models.CASCADE,related_name="appointment")
+    app_date = models.DateTimeField()
+    status = models.CharField(choices=STATUS, max_length=2, null=True, blank=True)
+    
+
+    def __str__(self):
+        return f"{self.doctor.full_name}--{self.patient.full_name}"
+
+    class Meta:
+        ordering = ["-id"]
+
+
