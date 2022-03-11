@@ -1,0 +1,125 @@
+{% extends 'layout/admin/base.html' %}
+<!-- title -->
+{% load static %}
+
+{% block title %}Find Doctor{% endblock %}
+<!-- content -->
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="content-title">Search Doctor</h5>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Search Doctor</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+
+<div class="content">
+    <div class="container-fluid ml-5">
+
+        <div class="row">
+            <div class="col-md-4 col-lg-4 col-xl-3">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="card search-filter">
+                    <div class="card-header bg-primary">
+                        <h4 class="card-title mb-0">Search Filter</h4>
+                    </div>
+                    <div class="card-body">
+                    <div class="filter-widget">
+                        <h4>Location</h4>
+                        <div class="">
+                            <input type="text" class="form-control" placeholder="location" name="location">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="filter-widget mt-3 pt-5">
+                        <h4>Select Specialist</h4>
+                        <div>
+                            <label class="custom_check">
+                                <input type="checkbox" name="specialist" value="Urology">
+                                <span class="checkmark"></span> Urology
+                            </label>
+                        </div>
+                        <div>
+                            <label class="custom_check">
+                                <input type="checkbox" name="specialist" value="Urology">
+                                <span class="checkmark"></span> Neurology
+                            </label>
+                        </div>
+                        <div>
+                            <label class="custom_check">
+                                <input type="checkbox" name="specialist" value="Dentist">
+                                <span class="checkmark"></span> Dentist
+                            </label>
+                        </div>
+                        <div>
+                            <label class="custom_check">
+                                <input type="checkbox" name="specialist" value="Orthopedic">
+                                <span class="checkmark"></span> Orthopedic
+                            </label>
+                        </div>
+                        <div>
+                            <label class="custom_check">
+                                <input type="checkbox" name="specialist" value="Cardiologist">
+                                <span class="checkmark"></span> Cardiologist
+                            </label>
+                        </div>
+                    </div></li>
+                        <div class="btn-search">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Search Filter -->
+                </form>
+            </div>
+            <div class="col-md-8 col-lg-8 col-xl-9">
+                <!-- Doctor Widget -->
+                {% for doctor in doctors %}
+                <div class="card" style="width: 50rem;margin-left: 10em;">
+                    {% if doctor.image %}
+                        <img src="{{doctor.image.url}}" class="rounded-circle" alt="Cinque Terre" width="304" height="236" style="margin-left: 200px;">
+                    {% else %}
+                        <img src="{% static 'user/image/dr3.jpg' %}" class="rounded-circle" alt="Cinque Terre" width="304" height="236" style="margin-left: 200px;">
+                    {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title"> <i class="t-nav-icon nav-icon fa fa-user"></i>{{doctor.full_name}}</h5>
+                      <h5 class="card-title"> <i class="t-nav-icon nav-icon fa fa-briefcase"></i>{{doctor.hospital_name}}</h5>
+                      <h5 class="card-title"><i class="t-nav-icon nav-icon fa fa-phone"></i>{{doctor.phone}}</h5>
+                      <h5 class="card-title"><i class="t-nav-icon nav-icon fa fa-briefcase"></i>{{doctor.location}}</h5>
+
+                      <p class="card-text"><i class="t-nav-icon nav-icon fa fa-pencil"></i>{{doctor.experience}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item text-primary">Specility: {{doctor.specialist}}</li>
+                      <li class="list-group-item text-primary">Working Time: {{doctor.timing}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link  text-primary"><button class="btn btn-dark">Make Apppointment</button></a>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
+
+            <!-- Search Filter -->
+           
+        </div>
+    </div></div>
+
+
+{% endblock %}

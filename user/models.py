@@ -87,7 +87,7 @@ class Doctor(models.Model):
     shift = models.CharField(choices=SHIFT, max_length=2, null=True, blank=True)
     location = models.CharField(max_length=100)
     dob = models.DateField(("Date of birth"), null=True)
-    image = models.ImageField(upload_to="patient")
+    image = models.ImageField(upload_to="doctor",null=True,blank=True)
     experience = models.CharField(max_length=100, null=True)
     specialist = models.CharField(max_length=100, null=True)
     clinic = models.CharField(max_length=100, null=True, blank=True)
