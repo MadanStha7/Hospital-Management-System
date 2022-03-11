@@ -128,3 +128,12 @@ class PatientDashboard(TemplateView):
             user = None
         context["user"] = user
         return context
+
+
+class FindDoctor(TemplateView):
+    template_name = "patient/find-doctor.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["doctors"] = Doctor.objects.all()
+        return context
