@@ -1,0 +1,75 @@
+{% extends 'layout/admin/base.html' %}
+<!-- title -->
+{% load static %}
+
+{% block title %}Find Doctor{% endblock %}
+<!-- content -->
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <a href="{% url 'find-doctor' %}"><button class="btn btn-success">
+            Appoinment<br>
+          </button>
+        </a>
+        <div class="row">
+            <div class="col-sm-6">
+                <br>
+                <h5 class="content-title">Search Doctor</h5>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Search Doctor</li>
+                    <li class="breadcrumb-item active"></li>
+
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<div class="card text-center w-75" style="margin-left: 200px";>
+    <div class="card-header text-primary bg-primary">
+      Book Appointment
+    </div>
+    <div class="card-body">
+        {% if doctor_obj.image %}
+            <img src="{{doctor_obj.image.url}}" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+        {% else %}
+            <img src="{% static 'user/image/dr3.jpg' %}" class="rounded-circle" alt="Cinque Terre" width="304" height="236" style="margin-left: 200px;">
+
+        {% endif %} 
+      <h4 class="card-title">{{doctor_obj.full_name}}</h4>
+      <h5 class="card-text">Works at {{doctor_obj.hospital_name}}</h5>
+      <p class="card-text">{{doctor_obj.location}}</p>
+
+      
+      <a href="#" class="btn btn-primary">Specility:{{doctor_obj.specialist}}</a>
+    </div>
+   
+</div>
+<!-- form -->
+<div class="w-75" style="margin-left: 200px">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="card search-filter">
+                <div class="card-body">
+                <div class="filter-widget">
+                    <h4>Enter Appoinement date</h4>
+                    <div class="">
+                        <input type="date" class="form-control" name="appointment_date" required>
+                    </div>
+                </div>
+                <div class="btn-search pt-2">
+                    <button type="submit" class="btn btn-primary">Proceed</button>
+
+                </div>
+            </div>
+        <!-- /Search Filter -->
+        </form>
+</div>
+
+{% endblock %}
