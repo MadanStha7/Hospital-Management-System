@@ -1,14 +1,20 @@
+import io
+from os import stat
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, CreateView, FormView
+from django.views.generic.detail import DetailView
 from user.forms import PatientForm, DoctorForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, View, DetailView
 from django.db import transaction
-from user.models import Patient, Doctor
+from user.models import Patient, Doctor, Appointment
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 User = get_user_model()
 
@@ -123,10 +129,12 @@ class PatientDashboard(TemplateView):
         context = super().get_context_data(**kwargs)
 
         try:
-            user = Patient.objects.get(user=self.request.user)
-        except Patient.DoesNotExist:
-            user = None
-        context["user"] = user
+            appoinment_list = Appointment.objects.filter(
+                patient__user=self.request.user
+            )
+        except Appointment.DoesNotExist:
+            appoinment_list = None
+        context["appoinment_list"] = appoinment_list
         return context
 
 
@@ -137,3 +145,70 @@ class FindDoctor(TemplateView):
         context = super().get_context_data(**kwargs)
         context["doctors"] = Doctor.objects.all()
         return context
+
+
+class SearchDoctor(View):
+    def get(self, request, *args, **kwargs):
+        location = self.request.GET.get("location", "")
+        speciality = self.request.GET.get("specility", "")
+        filtered_list = Doctor.objects.filter(
+            Q(location__icontains=location) | Q(specialist__icontains=speciality)
+        )
+        return render(
+            self.request,
+            "patient/find-doctor.html",
+            context={
+                "doctors": filtered_list,
+                "location": location,
+                "speciality": speciality,
+            },
+        )
+
+
+def make_appointment(request, pk):
+    """Make appounemnt with doctor"""
+    try:
+        doctor_obj = Doctor.objects.get(id=pk)
+    except Doctor.DoesNotExist:
+        return False
+    if request.method == "POST":
+        print("doctor_obj", request.user.id)
+
+        appointment_date = request.POST["appointment_date"]
+        app_obj = Appointment.objects.create(
+            doctor=doctor_obj,
+            patient=Patient.objects.get(user__id=request.user.id),
+            app_date=appointment_date,
+            status="P",
+        )
+        messages.success(request, "Appointment request has been successfully sent")
+        return HttpResponseRedirect(reverse_lazy("patient-dashboard"))
+    return render(request, "patient/make-appointment.html", {"doctor_obj": doctor_obj})
+
+
+class InvoiceView(DetailView):
+    model = Appointment
+    template_name = "patient/patient-invoice.html"
+    context_object_name = "invoice"
+
+
+def DownloadPdf(request):
+    file_path = os.path.join(settings.MEDIA_ROOT, "example-input-file.txt")
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response["Content-Disposition"] = "inline; filename=" + os.path.basename(
+                file_path
+            )
+            return response
+
+
+# Create your views here.
+def DownloadPdf(request, id):
+    buffer = io.BytesIO()
+    x = canvas.Canvas(buffer)
+    x.drawString(100, 100, "Let's generate this pdf file.")
+    x.showPage()
+    x.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename="invoice.pdf")
