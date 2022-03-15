@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, View, DetailView
 from django.db import transaction
-from user.models import Patient, Doctor, Appointment
+from user.models import Patient, Doctor, Appointment, Prescription
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
@@ -122,6 +122,12 @@ def Logout(request):
     return HttpResponseRedirect(reverse_lazy("home"))
 
 
+# photo category
+"""===================================
+------ Patient appointment section  ---
+======================================"""
+
+
 class PatientDashboard(TemplateView):
     template_name = "patient/appointment.html"
 
@@ -192,23 +198,25 @@ class InvoiceView(DetailView):
     context_object_name = "invoice"
 
 
-def DownloadPdf(request):
-    file_path = os.path.join(settings.MEDIA_ROOT, "example-input-file.txt")
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as fh:
-            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-            response["Content-Disposition"] = "inline; filename=" + os.path.basename(
-                file_path
-            )
-            return response
 
 
-# Create your views here.
-def DownloadPdf(request, id):
-    buffer = io.BytesIO()
-    x = canvas.Canvas(buffer)
-    x.drawString(100, 100, "Let's generate this pdf file.")
-    x.showPage()
-    x.save()
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename="invoice.pdf")
+"""===================================
+------ Patient Prescription section  ---
+======================================"""
+
+
+class PrescriptionDashboard(TemplateView):
+    template_name = "patient/prescriptions/pre-dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["prescriptions_list"] = Prescription.objects.filter(
+            appointement__patient__user=self.request.user
+        )
+        return context
+
+class PatientPrescriptionsInvoiceView(DetailView):
+    model = Prescription
+    template_name = "patient/prescriptions/patient-pre-invoice.html"
+    context_object_name = "invoice"
+

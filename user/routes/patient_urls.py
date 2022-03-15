@@ -11,7 +11,9 @@ from user.viewsets.patient_views import (
     SearchDoctor,
     make_appointment,
     InvoiceView,
-    DownloadPdf
+    PrescriptionDashboard,
+    PatientPrescriptionsInvoiceView,
+
 )
 
 urlpatterns = [
@@ -26,7 +28,9 @@ urlpatterns = [
     path("find-doctor/", FindDoctor.as_view(), name="find-doctor"),
     path("search-doctor/", SearchDoctor.as_view(), name="dr-search"),
     path("appoinment-doctor/<int:pk>", make_appointment, name="make-appointment"),
-    path("invoice/<int:pk>", InvoiceView.as_view(), name="invoice"),
-    path('download/pdf/', DownloadPdf, name='download-pdf'),
+    path("patient/invoice/<int:pk>", InvoiceView.as_view(), name="invoice"),
+    #prescriptions
+    path("prescriptions/",PrescriptionDashboard.as_view(),name="prescription"),
+    path("patient-prescriptions/invoice/<int:pk>", PatientPrescriptionsInvoiceView.as_view(), name="patient-prescriptions"),
 
 ]
