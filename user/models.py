@@ -96,7 +96,6 @@ class Doctor(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now_add=True)
 
-
     def save(self, *args, **kwargs):
         group, created = Group.objects.get_or_create(name="Doctor")
         self.user.groups.add(group)
@@ -129,7 +128,27 @@ class Appointment(models.Model):
     status = models.CharField(choices=STATUS, max_length=2, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.id}"
+        return f"Appointed with {self.doctor.full_name}-- by {self.patient.full_name}"
+
+    class Meta:
+        ordering = ["-id"]
+
+
+class Prescription(models.Model):
+    """Model to store the all the details that doctor provided to patient after appoinment"""
+
+    appointement = models.ForeignKey(
+        Appointment, on_delete=models.CASCADE, null=True, related_name="prescription"
+    )
+    name = models.CharField("name of Medicine", max_length=200)
+    quantity = models.CharField("Quantity", max_length=100, null=True, blank=True)
+    days = models.CharField("Days", max_length=100, null=True, blank=True)
+    time = models.CharField("Time", max_length=100, null=True, blank=True)
+    price = models.CharField("Price", max_length=100, null=True, blank=True)
+    date_created = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name}--{self.appointement}"
 
     class Meta:
         ordering = ["-id"]
