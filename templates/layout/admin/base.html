@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 {% load auth_extras %}
 <html lang="en">
-  {% load static %}
+{% load static %}
 
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>{% block title %}{% endblock %} | Admin Dashboard</title>
+    <title>{% block title %}{% endblock %} | Hospital Management System</title>
 
     <!-- Font Awesome Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'admin/css/bootstrap.min.css' %}" />
@@ -23,31 +20,27 @@
     <link rel="stylesheet" href="{% static 'admin/css/custom.css' %}" />
 
     {% block static %}{% endblock %}
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="{% static 'images/favicon-32x32.png' %}"
-    />
-  </head>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}" />
+</head>
 
-  <body class="hold-transition sidebar-mini" id="trimestersdata">
+<body class="hold-transition sidebar-mini" id="trimestersdata">
     <div class="wrapper">
-      {% if request.user.is_authenticated and request.user|has_group:"Patient"%}
-        {% include 'patient/patient-header.html' %} 
-      {% elif request.user.is_authenticated and request.user|has_group:"Doctor" %}
-      {%else %} {% include 'layout/admin/header.html' %} {% endif %}
+        {% if request.user.is_authenticated and request.user|has_group:"Patient"%}
+        {% include 'patient/patient-header.html' %}
+        {% elif request.user.is_authenticated and request.user|has_group:"Doctor" %}
+        {% include 'doctor/doctor-header.html' %}
+        {% endif %}
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- sucess messages  -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- sucess messages  -->
 
-        <!-- Content Header (Page header) -->
-        {% block content %} {% endblock %}
-      </div>
-      <!-- /.content-wrapper -->
-      <!-- Main Footer -->
-      {% comment %} {% include 'layout/admin/footer.html' %} {% endcomment %}
+            <!-- Content Header (Page header) -->
+            {% block content %} {% endblock %}
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        {% comment %} {% include 'layout/admin/footer.html' %} {% endcomment %}
     </div>
     <!-- ./wrapper -->
 
@@ -61,32 +54,33 @@
     <!-- AdminLTE App -->
     <script src="{% static 'admin/js/adminlte.js' %}"></script>
     <script>
-      /** add active class and stay opened when selected */
-      var url = window.location;
+        /** add active class and stay opened when selected */
+        var url = window.location;
 
-      // for sidebar menu entirely but not cover treeview
-      $("ul.nav-sidebar a")
-        .filter(function () {
-          return this.href == url;
-        })
-        .parent()
-        .siblings()
-        .removeClass("active")
-        .end()
-        .addClass("active");
+        // for sidebar menu entirely but not cover treeview
+        $("ul.nav-sidebar a")
+            .filter(function () {
+                return this.href == url;
+            })
+            .parent()
+            .siblings()
+            .removeClass("active")
+            .end()
+            .addClass("active");
 
-      // for treeview
-      $("ul.treeview-menu a")
-        .filter(function () {
-          return this.href == url;
-        })
-        .parentsUntil(".nav-sidebar > .treeview-menu")
-        .siblings()
-        .removeClass("active")
-        .end()
-        .addClass("active");
+        // for treeview
+        $("ul.treeview-menu a")
+            .filter(function () {
+                return this.href == url;
+            })
+            .parentsUntil(".nav-sidebar > .treeview-menu")
+            .siblings()
+            .removeClass("active")
+            .end()
+            .addClass("active");
       // Timeout is 3 sec, you can change it
     </script>
     {% block script%}{% endblock %}
-  </body>
+</body>
+
 </html>

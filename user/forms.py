@@ -73,11 +73,12 @@ class DoctorForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
     full_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     phone = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-    blood_group = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control"})
-    )
+
     location = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     hospital_name = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"})
@@ -89,6 +90,7 @@ class DoctorForm(forms.ModelForm):
         fields = [
             "email",
             "password",
+            "confirm_password",
             "full_name",
             "phone",
             "dob",
@@ -123,3 +125,21 @@ class DoctorForm(forms.ModelForm):
 class UserLoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput())
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class DoctorProfileForm(forms.ModelForm):
+    class Meta:
+        model = Doctor
+        fields = [
+            "full_name",
+            "status",
+            "clinic",
+            "hospital_name",
+            "shift",
+            "phone",
+            "location",
+            "specialist",
+            "experience",
+            "dob",
+            "image",
+        ]
