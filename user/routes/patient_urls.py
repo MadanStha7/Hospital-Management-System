@@ -7,7 +7,13 @@ from user.viewsets.patient_views import (
     Logout,
     PatientDashboard,
     RegisterTypeView,
-    FindDoctor
+    FindDoctor,
+    SearchDoctor,
+    make_appointment,
+    InvoiceView,
+    PrescriptionDashboard,
+    PatientPrescriptionsInvoiceView,
+
 )
 
 urlpatterns = [
@@ -17,6 +23,14 @@ urlpatterns = [
     path("patient-register/", PatientRegisterView.as_view(), name="patient-register"),
     path("doctor-register/", DoctorRegisterView.as_view(), name="doctor-register"),
     path("logout/", Logout, name="logout"),
+    # appoinment
     path("patient-dashboard/", PatientDashboard.as_view(), name="patient-dashboard"),
     path("find-doctor/", FindDoctor.as_view(), name="find-doctor"),
+    path("search-doctor/", SearchDoctor.as_view(), name="dr-search"),
+    path("appoinment-doctor/<int:pk>", make_appointment, name="make-appointment"),
+    path("patient/invoice/<int:pk>", InvoiceView.as_view(), name="invoice"),
+    #prescriptions
+    path("prescriptions/",PrescriptionDashboard.as_view(),name="prescription"),
+    path("patient-prescriptions/invoice/<int:pk>", PatientPrescriptionsInvoiceView.as_view(), name="patient-prescriptions"),
+
 ]

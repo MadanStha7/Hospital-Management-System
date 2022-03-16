@@ -21,13 +21,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h5 class="content-title">Appointment</h5>
+                <h5 class="content-title">Presriptions</h5>
             </div>
             <!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Appointment</li>
+                    <li class="breadcrumb-item active">Presriptions</li>
                 </ol>
             </div>
             <!-- /.col -->
@@ -42,9 +42,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row mb-3">
-            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
-                <a href="{% url 'find-doctor' %}"><button class="btn btn-success">Find Doctor</button></a>
-            </div>
+            
         </div>
         <div class="row">
             <div class="col-12">
@@ -53,24 +51,28 @@
                         <thead>
                             <tr class="bg-dark text-center">
                                 <th width="2%">SN</th>
-                                <th>Doctor</th>
-                                <th>Appoinement Date</th>
-                                <th>Charge</th>
-                                <th width="10%">Status</th>
-                                <th width="12%">Hospital Name</th>
+                                <th>Presribed Doctor</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th width="10%">Days</th>
+                                <th width="10%">Time</th>
+                                <th width="12%">Price</th>
+                                <th width="12%">precribed Date</th>
                                 <th width="12%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for appointments in appoinment_list %}
+                            {% for pre in prescriptions_list %}
                             <tr>
                                 <td class="text-center">{{forloop.counter}}</td>
-                                <td class="text-center">{{appointments.doctor.full_name}}</td>
-                                <td class="text-center">{{appointments.app_date}}</td>
-                                <td class="text-center">{{appointments.doctor.price}}</td>
-                                <td class="text-center">{% if appointments.status == "P" %}<p class="text-danger">{{appointments.get_status_display}}</p>{% else %}<p class="text-success">{{appointments.get_status_display}}</p>{% endif %}</td>
-                                <td class="text-center">{{appointments.doctor.hospital_name}}</td>
-                                <td class="text-center">{% if appointments.status == "A" %}<a href="{% url 'invoice' appointments.id %}"><button class="btn btn-info">View</button>{% else %}<p>Wait for approval</p>{% endif %}</td></a>
+                                <td class="text-center">{{pre.appointement.doctor.full_name}}</td>
+                                <td class="text-center">{{pre.name}}</td>
+                                <td class="text-center">{{pre.quantity}}</td>
+                                <td class="text-center">{{pre.days}}</td>
+                                <td class="text-center">{{pre.time}}</td>
+                                <td class="text-center">{{pre.price}}</td>
+                                <td class="text-center">{{pre.date_created}}</td>
+                                <td class="text-center"><a href="{% url 'patient-prescriptions' pre.pk %}"><button class="btn btn-info">View</button></td></a>
 
                             </tr>
                             {% endfor %}
