@@ -159,3 +159,16 @@ class DoctorProfileForm(forms.ModelForm):
             "dob",
             "image",
         ]
+        widgets = {
+            "full_name": forms.TextInput(attrs={"class": "form-control"}),
+            "status": forms.TextInput(attrs={"class": "form-control"}),
+            "clinic": forms.TextInput(attrs={"class": "form-control"}),
+            "hospital_name": forms.TextInput(attrs={"class": "form-control"}),
+            "shift": forms.Select(attrs={"class": "form-control"}),
+            "phone": forms.TextInput(attrs={"class": "form-control"}),
+            "location": forms.TextInput(attrs={"class": "form-control"}),
+            "specialist": forms.TextInput(attrs={"class": "form-control"}),
+            "experience": forms.TextInput(attrs={"class": "form-control"}),
+            "dob": forms.DateInput(attrs={"class": "form-control","type": "date"}),
+            "image": forms.FileInput(attrs={"class": "form-control"}),
+        }

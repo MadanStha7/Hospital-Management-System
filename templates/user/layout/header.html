@@ -50,7 +50,7 @@
       {% if request.user|has_group:"Patient" %} 
         <a href="{% url 'patient-dashboard' %}"><span class="d-none d-md-inline text-white">{{request.user.patient.full_name}}</span></a>
       {% elif request.user|has_group:"Doctor" %}
-      <a href=""
+      <a href="{% url 'doctor-dashboard' %}"
         ><span class="d-none d-md-inline text-white"
           >{{request.user.doctor.full_name}}</span
         ></a
