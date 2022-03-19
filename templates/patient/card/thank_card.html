@@ -1,0 +1,36 @@
+{% extends 'layout/admin/base.html' %}
+<!-- title -->
+{% load static %}
+
+{% block title %}card{% endblock %}
+<!-- content -->
+{% block content %}
+
+<h2 style="font-family:roman;color:blue;background-color: white;" align="center" class="mt-3">Apply for card</h2>
+        
+            <div class="card m-5">
+               
+                    <div class="card-body bg-success">
+                        <div class="success-cont">
+                            <h3>Thank You! {{request.user.patient.full_name}}</h3>
+                            <p>Your request has been sent Successfully ,wait for approval.</p>
+                        </div>
+                    </div>
+            </div>
+
+{% endblock %}
+{% block script %}
+
+<script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js" charset="utf-8"></script>
+<script>
+   $(document).ready(function() {
+    $('#data-table').DataTable();
+} );
+
+var message_ele = document.getElementById("patient-profile");
+setTimeout(function () {
+    message_ele.style.display = "none";
+}, 3000);
+</script>
+{% endblock %}

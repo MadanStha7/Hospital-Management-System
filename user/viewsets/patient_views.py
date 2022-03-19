@@ -3,7 +3,8 @@ from os import stat
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, CreateView, FormView
 from django.views.generic.detail import DetailView
-from user.forms import PatientForm, DoctorForm, UserLoginForm
+from django.views.generic.edit import UpdateView
+from user.forms import PatientForm, DoctorForm, UserLoginForm, PatientEditFormView
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -13,8 +14,8 @@ from user.models import Patient, Doctor, Appointment, Prescription
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 User = get_user_model()
 
@@ -198,8 +199,6 @@ class InvoiceView(DetailView):
     context_object_name = "invoice"
 
 
-
-
 """===================================
 ------ Patient Prescription section  ---
 ======================================"""
@@ -215,8 +214,55 @@ class PrescriptionDashboard(TemplateView):
         )
         return context
 
+
 class PatientPrescriptionsInvoiceView(DetailView):
     model = Prescription
     template_name = "patient/prescriptions/patient-pre-invoice.html"
     context_object_name = "invoice"
+
+
+def patient_profile(request):
+    form = PatientEditFormView(instance=request.user.patient)
+    print("form", form.data)
+    if request.method == "POST":
+        form = PatientEditFormView(
+            request.POST, request.FILES, instance=request.user.patient
+        )
+        if form.is_valid():
+            print("form valid", form)
+            form.save()
+            messages.success(request, "Profile Updated Successfully")
+            return redirect("patient-profile")
+        else:
+            print("errors", form.errors)
+    return render(request, "patient/profile.html", {"form": form})
+
+
+def patient_changepassword(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, "Your password was successfully updated!")
+            return redirect("login")
+        else:
+            messages.error(request, "Please correct the error below.")
+    else:
+        form = PasswordChangeForm(request.user)
+        print("form", form.data)
+    return render(request, "patient/change-password.html", {"form": form})
+
+
+class ApplyCard(TemplateView):
+    template_name = "patient/card/apply-card.html"
+
+
+def card_confirm(request):
+    pat = Patient.objects.filter(user_id=request.user.id).update(card_status="P")
+    print("patuient", pat)
+    return render(request, "patient/card/thank_card.html")
+
+class CardView(TemplateView):
+    template_name = "patient/card/card-view.html"
 

@@ -46,9 +46,20 @@ class Patient(models.Model):
         ("Other", "Other"),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient")
+    CARD_STATUS = [
+        ("P", "Pending"),
+        ("V", "Verified"),
+    ]
+
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="patient", null=True, blank=True
+    )
     full_name = models.CharField(("Full Name"), max_length=50)
     health_uid = models.CharField(max_length=16, null=True, blank=True)
+    health_card_exp = models.DateField(null=True, blank=True)
+    card_status = models.CharField(
+        choices=CARD_STATUS, max_length=1, null=True, blank=True
+    )
     phone = models.CharField(max_length=15)
     dob = models.DateField(("Date of birth"), null=True)
     blood_group = models.CharField(choices=BLOOD_GROUP, max_length=5, null=True)

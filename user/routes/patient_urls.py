@@ -13,7 +13,11 @@ from user.viewsets.patient_views import (
     InvoiceView,
     PrescriptionDashboard,
     PatientPrescriptionsInvoiceView,
-
+    patient_profile,
+    patient_changepassword,
+    ApplyCard,
+    card_confirm,
+    CardView
 )
 
 urlpatterns = [
@@ -29,8 +33,25 @@ urlpatterns = [
     path("search-doctor/", SearchDoctor.as_view(), name="dr-search"),
     path("appoinment-doctor/<int:pk>", make_appointment, name="make-appointment"),
     path("patient/invoice/<int:pk>", InvoiceView.as_view(), name="invoice"),
-    #prescriptions
-    path("prescriptions/",PrescriptionDashboard.as_view(),name="prescription"),
-    path("patient-prescriptions/invoice/<int:pk>", PatientPrescriptionsInvoiceView.as_view(), name="patient-prescriptions"),
+    # prescriptions
+    path("prescriptions/", PrescriptionDashboard.as_view(), name="prescription"),
+    path(
+        "patient-prescriptions/invoice/<int:pk>",
+        PatientPrescriptionsInvoiceView.as_view(),
+        name="patient-prescriptions",
+    ),
+    # patient profile
+    path("patient-profile/", patient_profile, name="patient-profile"),
+    # change password
+    path(
+        "patient-change-password",
+        patient_changepassword,
+        name="patient-change-password",
+    ),
+    # apply for card
+    path("apply-card/", ApplyCard.as_view(), name="apply-card"),
+    path("card-confirm/", card_confirm, name="card-confirm"),
+    path("card-view/", CardView.as_view(), name="card-view"),
+
 
 ]

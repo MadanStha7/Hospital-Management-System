@@ -24,7 +24,7 @@ class PatientForm(forms.ModelForm):
     full_name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     phone = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
 
-    # dob = forms.CharField(widget=DateInput(attrs={"class": "form-control"}))
+    dob = forms.CharField(widget=DateInput(attrs={"class": "form-control"}))
 
     class Meta:
         model = Patient
@@ -66,6 +66,22 @@ class PatientForm(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError("password didnot match")
         return confirm_password
+
+
+class PatientEditFormView(forms.ModelForm):
+    dob = forms.CharField(widget=DateInput(attrs={"class": "form-control"}))
+
+    class Meta:
+        model = Patient
+        fields = (
+            "full_name",
+            "phone",
+            "health_uid",
+            "dob",
+            "blood_group",
+            "gender",
+            "image",
+        )
 
 
 class DoctorForm(forms.ModelForm):
