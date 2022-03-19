@@ -1,4 +1,5 @@
 {% load static %}
+
 <!-- Navbar -->
 <nav
   class="main-header navbar navbar-expand bg-white text-dark navbar-light border-bottom"
@@ -68,14 +69,13 @@
         </li>
         
         <li class="nav-item">
-          <a href="" class="nav-link">
+          <a href="{% url 'apply-card' %}" class="nav-link">
             <i class="t-nav-icon nav-icon fa fa-id-card"></i>
             <p class="h6">Card</p>
           </a>
         </li>
         <li class="nav-item">
-          <a
-            href=""
+          <a href="{% url 'patient-profile' %}"
             class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-user"></i>
@@ -84,9 +84,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link">
+          <a href="{% url 'patient-change-password' %}" class="nav-link">
             <i class="t-nav-icon nav-icon fa fa-credit-card"></i>
             <p class="h6">Change password</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <i class="t-nav-icon nav-icon fa fa-credit-card"></i>
+            <p class="h6">Logout</p>
           </a>
         </li>
       </ul>
