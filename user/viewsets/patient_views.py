@@ -47,6 +47,10 @@ class LoginView(FormView):
                 return HttpResponseRedirect(reverse_lazy("doctor-dashboard"))
             elif user.groups.filter(name="Patient"):
                 return HttpResponseRedirect(reverse_lazy("patient-dashboard"))
+            elif self.request.user.is_superuser:
+                return HttpResponseRedirect(reverse_lazy("admin-dashboard"))
+            else:
+                pass
 
         else:
             messages.add_message(
@@ -179,7 +183,6 @@ def make_appointment(request, pk):
     except Doctor.DoesNotExist:
         return False
     if request.method == "POST":
-        print("doctor_obj", request.user.id)
 
         appointment_date = request.POST["appointment_date"]
         app_obj = Appointment.objects.create(
@@ -223,13 +226,11 @@ class PatientPrescriptionsInvoiceView(DetailView):
 
 def patient_profile(request):
     form = PatientEditFormView(instance=request.user.patient)
-    print("form", form.data)
     if request.method == "POST":
         form = PatientEditFormView(
             request.POST, request.FILES, instance=request.user.patient
         )
         if form.is_valid():
-            print("form valid", form)
             form.save()
             messages.success(request, "Profile Updated Successfully")
             return redirect("patient-profile")
@@ -250,7 +251,6 @@ def patient_changepassword(request):
             messages.error(request, "Please correct the error below.")
     else:
         form = PasswordChangeForm(request.user)
-        print("form", form.data)
     return render(request, "patient/change-password.html", {"form": form})
 
 
@@ -260,9 +260,8 @@ class ApplyCard(TemplateView):
 
 def card_confirm(request):
     pat = Patient.objects.filter(user_id=request.user.id).update(card_status="P")
-    print("patuient", pat)
     return render(request, "patient/card/thank_card.html")
+
 
 class CardView(TemplateView):
     template_name = "patient/card/card-view.html"
-

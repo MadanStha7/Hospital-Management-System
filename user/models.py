@@ -163,3 +163,30 @@ class Prescription(models.Model):
 
     class Meta:
         ordering = ["-id"]
+
+
+class Hospital(models.Model):
+    STATUS = (
+        ("P", "Pending"),
+        ("A", "Approve"),
+    )
+
+    status = models.CharField(choices=STATUS, max_length=2, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    mobile = models.CharField(max_length=10, null=True)
+    name = models.CharField(max_length=100, null=True)
+    no_of_doctor = models.CharField(max_length=100, null=True)
+    no_of_beds = models.CharField(max_length=100, null=True)
+    foundation_date = models.DateField(null=True)
+    timing = models.CharField(max_length=100, null=True)
+    owner_name = models.CharField(max_length=100, null=True)
+    days = models.CharField(max_length=100, null=True)
+    address = models.CharField(max_length=100, null=True)
+    biography = models.TextField(null=True)
+    image = models.FileField(null=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        ordering = ["-id"]
