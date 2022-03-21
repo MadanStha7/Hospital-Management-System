@@ -24,10 +24,10 @@
   </div>
 </div>
 <!-- Main content -->
-<div id="root">
+  <div class="row ml-5 pl-5">
     <div class="container pt-5 ml-0 pl-2">
       <div class="row align-items-stretch">
-        <div class="c-dashboardInfo col-lg-3 col-md-6">
+        <div class="c-dashboardInfo col-lg-3 col-md-4">
           <div class="wrap">
             <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Doctors<svg
                 class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -35,10 +35,10 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
                 </path>
-              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">780</span>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{% if doctors  %}{{doctors}}{% else %}0{% endif %}</span>
           </div>
         </div>
-        <div class="c-dashboardInfo col-lg-3 col-md-6">
+        <div class="c-dashboardInfo col-lg-3 col-md-4">
           <div class="wrap">
             <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Patients<svg
                 class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -46,11 +46,11 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
                 </path>
-              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">50</span><span
-              class="hind-font caption-12 c-dashboardInfo__subInfo">Last month: €30</span>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{% if patients  %}{{patients}}{% else %}0{% endif %}</span>
+              <span class="hind-font caption-12 c-dashboardInfo__subInfo"></span>
           </div>
         </div>
-        <div class="c-dashboardInfo col-lg-3 col-md-6">
+        <div class="c-dashboardInfo col-lg-3 col-md-4">
           <div class="wrap">
             <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Hospital Appointment<svg
                 class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -58,10 +58,10 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
                 </path>
-              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">40</span>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{% if hospitals  %}{{hospitals}}{% else %}0{% endif %}</span>
           </div>
         </div>
-        <div class="c-dashboardInfo col-lg-3 col-md-6">
+        <div class="c-dashboardInfo col-lg-3 col-md-4">
           <div class="wrap">
             <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Doctor Appointment<svg
                 class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -69,7 +69,7 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
                 </path>
-              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">6,40%</span>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{% if appointments  %}{{appointments}}{% else %}0{% endif %}</span>
           </div>
         </div>
       </div>

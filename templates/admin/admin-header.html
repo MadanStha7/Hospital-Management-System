@@ -29,7 +29,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4 bg-info text-white">
   <!-- Brand Logo -->
-  <a href="{% url 'home' %}" class="brand-link">
+  <a href="{% url 'home' %}" class="brand-link" style="background-color: #0047AB;">
     <span class="brand-text font-weight-bold ml-4">Home</span>
   </a>
 
@@ -42,20 +42,44 @@
         data-widget="treeview"
         role="menu"
         data-accordion="false">
-        <li class="nav-item menu-open">
-          <a href="#" class="nav-link">
-            <i class="t-nav-icon nav-icon fa fa-address-book"></i>
-            <p>
-              Dashboard
-              <i class="right fa fa-angle-left"></i>
-            </p>
+        <li class="nav-item">
+          <a href="{% url 'admin-dashboard' %}" class="nav-link  {% if url_name == 'admin-dashboard' %}active {% endif %}">
+            <i class="t-nav-icon nav-icon fa fa-book"></i>
+            <p class="h6">Dashboard</p>
           </a>
         </li>
         
         <li class="nav-item">
-          <a href="{% url 'apply-card' %}" class="nav-link">
-            <i class="t-nav-icon nav-icon fa fa-id-card"></i>
-            <p class="h6">Card</p>
+          <a href="{% url 'doctor-list' %}" class="nav-link">
+            <i class="t-nav-icon nav-icon fa fa-user"></i>
+            <p class="h6">Doctors</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'patient-list' %}"
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            <p class="h6">
+              <i class="t-nav-icon nav-icon fa fa-user"></i>
+              patients
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'hospital-list' %}"
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            <p class="h6">
+              <i class="t-nav-icon nav-icon fa fa-plus"></i>
+              Hospitals
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'patient-profile' %}"
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            <p class="h6">
+              <i class="t-nav-icon nav-icon fa fa-plus"></i>
+              Hospital Appointment
+            </p>
           </a>
         </li>
         <li class="nav-item">
@@ -63,7 +87,26 @@
             class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-user"></i>
-              Profile
+              Doctor Appointment
+
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'patient-profile' %}"
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            <p class="h6">
+              <i class="t-nav-icon nav-icon fa fa-id-card-o"></i>
+              Pending card
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'patient-profile' %}"
+            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            <p class="h6">
+              <i class="t-nav-icon nav-icon fa fa-id-card-o"></i>
+              All cards
             </p>
           </a>
         </li>
