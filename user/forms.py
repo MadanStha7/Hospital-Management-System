@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models import fields
-from .models import Patient, Doctor
+from .models import Appointment, Patient, Doctor, Prescription
 from django.forms import ValidationError
 from django.forms import DateInput
 from django.contrib.auth import get_user_model
@@ -169,6 +169,31 @@ class DoctorProfileForm(forms.ModelForm):
             "location": forms.TextInput(attrs={"class": "form-control"}),
             "specialist": forms.TextInput(attrs={"class": "form-control"}),
             "experience": forms.TextInput(attrs={"class": "form-control"}),
-            "dob": forms.DateInput(attrs={"class": "form-control","type": "date"}),
+            "dob": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
             "image": forms.FileInput(attrs={"class": "form-control"}),
+        }
+
+
+class PrescriptionCreateForm(forms.ModelForm):
+    def __init__(self,user, *args, **kwargs):
+        super(PrescriptionCreateForm, self).__init__(*args, **kwargs)
+        self.fields["appointement"].queryset = Appointment.objects.filter(doctor__user=user)
+
+    class Meta:
+        model = Prescription
+        fields = [
+            "appointement",
+            "name",
+            "quantity",
+            "days",
+            "time",
+            "price",
+        ]
+        widgets = {
+            "appointement": forms.Select(attrs={"class": "form-control"}),
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "quantity": forms.TextInput(attrs={"class": "form-control"}),
+            "days": forms.TextInput(attrs={"class": "form-control"}),
+            "time": forms.TextInput(attrs={"class": "form-control"}),
+            "price": forms.TextInput(attrs={"class": "form-control"}),
         }
