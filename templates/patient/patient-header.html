@@ -37,13 +37,14 @@
   <div class="sidebar bg-dark text-white">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
+      {% with request.resolver_match.url_name as url_name %}
       <ul
         class="nav nav-pills nav-sidebar flex-column"
         data-widget="treeview"
         role="menu"
         data-accordion="false">
         <li class="nav-item menu-open">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link {% if url_name == 'patient-dashboard' or url_name == 'prescription' %}active {% endif %}">
             <i class="t-nav-icon nav-icon fa fa-address-book"></i>
             <p>
               Dashboard
@@ -52,7 +53,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{% url 'patient-dashboard'  %}" class="nav-link">
+              <a href="{% url 'patient-dashboard'  %}" class="nav-link   {% if url_name == 'patient-dashboard' %}active  bg-primary {% endif %}">
                 <i class="t-nav-icon nav-icon fa fa-id-card"></i>
                 <p>Appointment</p>
               </a>
@@ -60,7 +61,7 @@
           </ul>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{% url 'prescription'  %}" class="nav-link">
+              <a href="{% url 'prescription'  %}" class="nav-link  {% if url_name == 'prescription' %}active  bg-primary {% endif %}">
                 <i class="t-nav-icon nav-icon fa fa-id-card"></i>
                 <p>Prescriptions</p>
               </a>
@@ -69,14 +70,14 @@
         </li>
         
         <li class="nav-item">
-          <a href="{% url 'apply-card' %}" class="nav-link">
+          <a href="{% url 'apply-card' %}" class="nav-link {% if url_name == 'apply-card' or url_name == 'card-view'  %}active {% endif %}">
             <i class="t-nav-icon nav-icon fa fa-id-card"></i>
             <p class="h6">Card</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="{% url 'patient-profile' %}"
-            class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
+            class="nav-link {% if url_name == 'patient-profile' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-user"></i>
               Profile
@@ -84,7 +85,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'patient-change-password' %}" class="nav-link">
+          <a href="{% url 'patient-change-password' %}" class="nav-link {% if url_name == 'patient-change-password' %}active {% endif %}">
             <i class="t-nav-icon nav-icon fa fa-credit-card"></i>
             <p class="h6">Change password</p>
           </a>
@@ -96,6 +97,7 @@
           </a>
         </li>
       </ul>
+      {% endwith %}
     </nav>
     <!-- /.sidebar-menu -->
   </div>

@@ -17,7 +17,8 @@ from user.viewsets.patient_views import (
     patient_changepassword,
     ApplyCard,
     card_confirm,
-    CardView
+    CardView,
+    ContactView
 )
 
 urlpatterns = [
@@ -52,6 +53,9 @@ urlpatterns = [
     path("apply-card/", ApplyCard.as_view(), name="apply-card"),
     path("card-confirm/", card_confirm, name="card-confirm"),
     path("card-view/", CardView.as_view(), name="card-view"),
+
+    #contact us
+    path("contact-us",ContactView.as_view(),name="contact")
 
 
 ]

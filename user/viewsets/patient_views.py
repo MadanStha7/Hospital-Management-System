@@ -27,6 +27,11 @@ class HomeView(TemplateView):
 
     template_name = "user/index.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["doctors"] = Doctor.objects.all().order_by("-date_created")[:4]
+        return context
+
 
 class RegisterTypeView(TemplateView):
     template_name = "user/register-type.html"
@@ -265,3 +270,7 @@ def card_confirm(request):
 
 class CardView(TemplateView):
     template_name = "patient/card/card-view.html"
+
+
+class ContactView(TemplateView):
+    template_name = "user/contact.html"

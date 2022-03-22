@@ -4,42 +4,9 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
   <div class="container">
-    <h1>Search Doctor</h1>
     <h2>Discover the best doctors, clinic & hospital</h2>
     <br /><br />
-    <form action="" method="post" role="form" class="php-email-form">
-      <div class="row">
-        <div class="col-md-2 form-group">
-          <input
-            type="text"
-            name="name"
-            class="form-control"
-            id="name"
-            placeholder="Location"
-            style="border-radius: 50px"
-            data-rule="minlen:4"
-            data-msg="Please enter at least 4 chars"
-          />
-          <div class="validate"></div>
-        </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            id="email"
-            style="border-radius: 50px"
-            placeholder="Doctor by specialization"
-            data-rule="email"
-            data-msg="Please enter a valid email"
-          />
-          <div class="validate"></div>
-        </div>
-        <div class="col-md-4 form-group mt-md-0">
-          <a href="#about" class="btn-get-started scrollto">Search</a>
-        </div>
-      </div>
-    </form>
+ 
   </div>
 </section>
 <!-- End Hero -->
@@ -48,118 +15,46 @@
   <!-- End Why Us Section -->
 
   <!-- ======= Doctors Section ======= -->
-  <section id="doctors" class="doctors">
+  <section id="doctors" class="doctors h-75">
     <div class="container">
       <div class="section-title">
         <h2>Doctors</h2>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
-        </p>
+          In this digital age, the first place that patients typically learn about you is on review websites. A strong presence across multiple review platforms is a surefire way to improve your healthcare practice’s online reputation and attract new patients.        </p>
       </div>
 
       <div class="row">
+        {% for doctor in doctors %}
         <div class="col-lg-6">
           <div class="member d-flex align-items-start">
-            <div class="pic">
+            <div class="">
+              {% if doctor.image %}
+                <img
+                src="{{doctor.image.url}}"
+                class="img-fluid"
+                alt=""
+                width="80px" height="150px"
+              />
+              {% else %}
               <img
                 src="assets/img/doctors/doctors-1.jpg"
                 class="img-fluid"
                 alt=""
               />
+              {% endif %}
             </div>
             <div class="member-info">
-              <h4>Walter White</h4>
-              <span>Chief Medical Officer</span>
-              <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+              <h4>{{doctor.full_name}}</h4>
+              <h5 class="card-title"> <i class="t-nav-icon nav-icon fa fa-user"></i>&nbsp;{{doctor.full_name}}</h5>
+              <h5 class="card-title"> <i class="t-nav-icon nav-icon fa fa-briefcase"></i>&nbsp;{{doctor.hospital_name}}</h5>
+              <h5 class="card-title"><i class="t-nav-icon nav-icon fa fa-phone"></i>&nbsp;{{doctor.phone}}</h5>
               <div class="social">
-                <a href=""><i class="ri-twitter-fill"></i></a>
-                <a href=""><i class="ri-facebook-fill"></i></a>
-                <a href=""><i class="ri-instagram-fill"></i></a>
-                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                <span>Location : {{doctor.location}}</span>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-lg-6 mt-4 mt-lg-0">
-          <div class="member d-flex align-items-start">
-            <div class="pic">
-              <img
-                src="assets/img/doctors/doctors-2.jpg"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <div class="member-info">
-              <h4>Sarah Jhonson</h4>
-              <span>Anesthesiologist</span>
-              <p>
-                Aut maiores voluptates amet et quis praesentium qui senda para
-              </p>
-              <div class="social">
-                <a href=""><i class="ri-twitter-fill"></i></a>
-                <a href=""><i class="ri-facebook-fill"></i></a>
-                <a href=""><i class="ri-instagram-fill"></i></a>
-                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6 mt-4">
-          <div class="member d-flex align-items-start">
-            <div class="pic">
-              <img
-                src="assets/img/doctors/doctors-3.jpg"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <div class="member-info">
-              <h4>William Anderson</h4>
-              <span>Cardiology</span>
-              <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-              <div class="social">
-                <a href=""><i class="ri-twitter-fill"></i></a>
-                <a href=""><i class="ri-facebook-fill"></i></a>
-                <a href=""><i class="ri-instagram-fill"></i></a>
-                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6 mt-4">
-          <div class="member d-flex align-items-start">
-            <div class="pic">
-              <img
-                src="assets/img/doctors/doctors-4.jpg"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <div class="member-info">
-              <h4>Amanda Jepson</h4>
-              <span>Neurosurgeon</span>
-              <p>
-                Dolorum tempora officiis odit laborum officiis et et accusamus
-              </p>
-              <div class="social">
-                <a href=""><i class="ri-twitter-fill"></i></a>
-                <a href=""><i class="ri-facebook-fill"></i></a>
-                <a href=""><i class="ri-instagram-fill"></i></a>
-                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-              </div>
-            </div>
-          </div>
+        {% endfor %}
         </div>
       </div>
     </div>
