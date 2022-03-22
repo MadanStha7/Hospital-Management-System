@@ -36,8 +36,8 @@
                                 <td class="text-center">{{appointment.patient.gender}}</td>
                                 <td class="text-center">{{appointment.patient.health_uid}}</td>
                                 <td class="text-center">{{appointment.patient.blood_group}}</td>
-                                <td class="text-center"><img src="{{appointment.patient.image.url}}"
-                                        alt="{{appointment.patient.full_name}}" width="100px" height="100px"></td>
+                                <td class="text-center">{% if appointment.patient.image %}<img src="{{appointment.patient.image.url}}"
+                                        alt="{{appointment.patient.full_name}}" width="100px" height="100px">{% endif %}</td>
                                 </td>
                             </tr>
                             {% endfor %}

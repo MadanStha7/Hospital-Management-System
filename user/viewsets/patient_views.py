@@ -16,6 +16,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from user.decorators import LoginRequiredMixin
 
 User = get_user_model()
 
@@ -138,7 +139,7 @@ def Logout(request):
 ======================================"""
 
 
-class PatientDashboard(TemplateView):
+class PatientDashboard(LoginRequiredMixin, TemplateView):
     template_name = "patient/appointment.html"
 
     def get_context_data(self, **kwargs):
@@ -154,7 +155,7 @@ class PatientDashboard(TemplateView):
         return context
 
 
-class FindDoctor(TemplateView):
+class FindDoctor(LoginRequiredMixin, TemplateView):
     template_name = "patient/find-doctor.html"
 
     def get_context_data(self, **kwargs):
@@ -163,7 +164,7 @@ class FindDoctor(TemplateView):
         return context
 
 
-class SearchDoctor(View):
+class SearchDoctor(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         location = self.request.GET.get("location", "")
         speciality = self.request.GET.get("specility", "")
@@ -212,7 +213,7 @@ class InvoiceView(DetailView):
 ======================================"""
 
 
-class PrescriptionDashboard(TemplateView):
+class PrescriptionDashboard(LoginRequiredMixin, TemplateView):
     template_name = "patient/prescriptions/pre-dashboard.html"
 
     def get_context_data(self, **kwargs):
@@ -223,7 +224,7 @@ class PrescriptionDashboard(TemplateView):
         return context
 
 
-class PatientPrescriptionsInvoiceView(DetailView):
+class PatientPrescriptionsInvoiceView(LoginRequiredMixin, DetailView):
     model = Prescription
     template_name = "patient/prescriptions/patient-pre-invoice.html"
     context_object_name = "invoice"
@@ -259,7 +260,7 @@ def patient_changepassword(request):
     return render(request, "patient/change-password.html", {"form": form})
 
 
-class ApplyCard(TemplateView):
+class ApplyCard(LoginRequiredMixin, TemplateView):
     template_name = "patient/card/apply-card.html"
 
 
@@ -268,9 +269,9 @@ def card_confirm(request):
     return render(request, "patient/card/thank_card.html")
 
 
-class CardView(TemplateView):
+class CardView(LoginRequiredMixin, TemplateView):
     template_name = "patient/card/card-view.html"
 
 
-class ContactView(TemplateView):
+class ContactView(LoginRequiredMixin, TemplateView):
     template_name = "user/contact.html"

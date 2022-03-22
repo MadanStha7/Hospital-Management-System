@@ -7,9 +7,10 @@ from django.contrib import messages
 from datetime import date
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from user.decorators import LoginRequiredMixin
 
 
-class DoctorDashboard(TemplateView):
+class DoctorDashboard(LoginRequiredMixin, TemplateView):
     template_name = "doctor/doctor-dashboard.html"
 
     def get_context_data(self, **kwargs):
@@ -38,7 +39,7 @@ class DoctorDashboard(TemplateView):
         return context
 
 
-class DoctorProfile(TemplateView):
+class DoctorProfile(LoginRequiredMixin, TemplateView):
     template_name = "doctor/doctor-profile.html"
 
     def get_context_data(self, **kwargs):
@@ -49,7 +50,7 @@ class DoctorProfile(TemplateView):
         return context
 
 
-class DoctorProfileUpdateView(UpdateView):
+class DoctorProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "doctor/doctor-update.html"
     model = Doctor
     form_class = DoctorProfileForm
@@ -86,33 +87,38 @@ def doctor_changepassword(request):
     return render(request, "doctor/change-password.html", {"form": form})
 
 
-class MyPatientView(TemplateView):
+class MyPatientView(LoginRequiredMixin, TemplateView):
     template_name = "doctor/my-patient.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         logged_user = self.request.user
-        context["appointment_list"] = Appointment.objects.filter(doctor__user=logged_user, status="A")
+        context["appointment_list"] = Appointment.objects.filter(
+            doctor__user=logged_user, status="A"
+        )
         return context
 
 
-class PrescriptionView(TemplateView):
+class PrescriptionView(LoginRequiredMixin, TemplateView):
     template_name = "doctor/prescription.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         logged_user = self.request.user
-        context["prescription_list"] = Prescription.objects.filter(appointement__doctor__user=logged_user)
+        context["prescription_list"] = Prescription.objects.filter(
+            appointement__doctor__user=logged_user
+        )
         return context
 
-class PrescriptionCreateView(CreateView):
-    template_name = 'doctor/prescriptioncreate.html'
+
+class PrescriptionCreateView(LoginRequiredMixin, CreateView):
+    template_name = "doctor/prescriptioncreate.html"
     form_class = PrescriptionCreateForm
-    success_url = reverse_lazy('prescription-list')
-    
+    success_url = reverse_lazy("prescription-list")
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs["user"] = self.request.user
         return kwargs
 
     def form_valid(self, form):

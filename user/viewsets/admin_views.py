@@ -12,11 +12,12 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from user.decorators import LoginRequiredMixin
 
 User = get_user_model()
 
 
-class AdminView(TemplateView):
+class AdminView(LoginRequiredMixin, TemplateView):
     template_name = "admin/dashboard.html"
 
     def get_context_data(self, **kwargs):
@@ -28,7 +29,7 @@ class AdminView(TemplateView):
         return context
 
 
-class DoctorListView(TemplateView):
+class DoctorListView(LoginRequiredMixin, TemplateView):
     template_name = "admin/doctor-list.html"
 
     def get_context_data(self, **kwargs):
@@ -37,7 +38,7 @@ class DoctorListView(TemplateView):
         return context
 
 
-class PatientListView(TemplateView):
+class PatientListView(LoginRequiredMixin, TemplateView):
     template_name = "admin/patient-list.html"
 
     def get_context_data(self, **kwargs):
@@ -46,7 +47,7 @@ class PatientListView(TemplateView):
         return context
 
 
-class HospitalListView(TemplateView):
+class HospitalListView(LoginRequiredMixin, TemplateView):
     template_name = "admin/hospital-list.html"
 
     def get_context_data(self, **kwargs):
@@ -55,40 +56,40 @@ class HospitalListView(TemplateView):
         return context
 
 
-class DoctorDetailView(DetailView):
+class DoctorDetailView(LoginRequiredMixin, DetailView):
     template_name = "admin/doctor-detail.html"
     model = Doctor
     context_object_name = "doctor"
 
 
-class DoctorDeleteView(DeleteView):
+class DoctorDeleteView(LoginRequiredMixin, DeleteView):
     model = Doctor
     success_url = reverse_lazy("doctor-list")
 
 
-class PatientDetailView(DetailView):
+class PatientDetailView(LoginRequiredMixin, DetailView):
     template_name = "admin/patient-detail.html"
     model = Patient
     context_object_name = "patient"
 
 
-class patientDeleteView(DeleteView):
+class patientDeleteView(LoginRequiredMixin, DeleteView):
     model = Patient
     success_url = reverse_lazy("patient-list")
 
 
-class HospitalDetailView(DetailView):
+class HospitalDetailView(LoginRequiredMixin, DetailView):
     template_name = "admin/hospital-detail.html"
     model = Hospital
     context_object_name = "hospital"
 
 
-class HospitalDeleteView(DeleteView):
+class HospitalDeleteView(LoginRequiredMixin, DeleteView):
     model = Hospital
     success_url = reverse_lazy("hospital-list")
 
 
-class DoctorAppoinmentView(TemplateView):
+class DoctorAppoinmentView(LoginRequiredMixin, TemplateView):
     template_name = "admin/doctor-appointment-list.html"
 
     def get_context_data(self, **kwargs):
@@ -97,7 +98,7 @@ class DoctorAppoinmentView(TemplateView):
         return context
 
 
-class HospitalAppoinmentView(TemplateView):
+class HospitalAppoinmentView(LoginRequiredMixin, TemplateView):
     template_name = "admin/hospital-appointment-list.html"
 
     def get_context_data(self, **kwargs):
@@ -106,7 +107,7 @@ class HospitalAppoinmentView(TemplateView):
         return context
 
 
-class PendingCardView(TemplateView):
+class PendingCardView(LoginRequiredMixin, TemplateView):
     template_name = "admin/pending-card.html"
 
     def get_context_data(self, **kwargs):
@@ -124,7 +125,7 @@ def accept_pending_card(request, pk):
     return redirect("pending-card")
 
 
-class AllCardView(TemplateView):
+class AllCardView(LoginRequiredMixin, TemplateView):
     template_name = "admin/all-card.html"
 
     def get_context_data(self, **kwargs):
@@ -140,7 +141,7 @@ def cancel_card(request, pk):
     return redirect("all-card")
 
 
-class AdminProfile(TemplateView):
+class AdminProfile(LoginRequiredMixin, TemplateView):
     template_name = "admin/admin-profile.html"
 
     def get_context_data(self, **kwargs):
