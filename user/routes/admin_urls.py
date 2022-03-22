@@ -9,7 +9,15 @@ from user.viewsets.admin_views import (
     PatientDetailView,
     patientDeleteView,
     HospitalDetailView,
-    HospitalDeleteView
+    HospitalDeleteView,
+    DoctorAppoinmentView,
+    HospitalAppoinmentView,
+    PendingCardView,
+    accept_pending_card,
+    AllCardView,
+    cancel_card,
+    AdminProfile,
+    admin_changepassword
 )
 
 urlpatterns = [
@@ -34,7 +42,7 @@ urlpatterns = [
         patientDeleteView.as_view(),
         name="admin-patient-delete",
     ),
-    #hospitals
+    # hospitals
     path("hospital-list/", HospitalListView.as_view(), name="hospital-list"),
     path(
         "hospital-detail/<int:pk>",
@@ -45,5 +53,32 @@ urlpatterns = [
         "hospital-delete/<int:pk>",
         HospitalDeleteView.as_view(),
         name="admin-hospital-delete",
+    ),
+    # doctors
+    path(
+        "doctor-appointment/",
+        DoctorAppoinmentView.as_view(),
+        name="admin-doctor-appointment-list",
+    ),
+    # hospitals appointment
+    path(
+        "hospitals-appointment/",
+        HospitalAppoinmentView.as_view(),
+        name="admin-hospital-appointment-list",
+    ),
+    # health card
+    path("pending-card/", PendingCardView.as_view(), name="pending-card"),
+    path(
+        "accept-pending-card/<int:pk>", accept_pending_card, name="accept-pending-card"
+    ),
+    path("all-card/", AllCardView.as_view(), name="all-card"),
+    path("cancel-card/<int:pk>", cancel_card, name="cancel-card"),
+    # profile
+    path("admin-profile/", AdminProfile.as_view(), name="admin-profile"),
+     # change password
+    path(
+        "admin-change-password",
+        admin_changepassword,
+        name="admin-change-password",
     ),
 ]

@@ -64,8 +64,6 @@ class DoctorProfileUpdateView(UpdateView):
 
 def accept_appointment(request, pk):
     appointment = Appointment.objects.get(id=pk)
-    print(appointment, "...............................")
-    print(request.method)
     if request.method == "POST":
         appointment.status = "A"
         appointment.save()

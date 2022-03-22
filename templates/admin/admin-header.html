@@ -74,7 +74,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'patient-profile' %}"
+          <a href="{% url 'admin-hospital-appointment-list' %}"
             class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-plus"></i>
@@ -83,7 +83,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'patient-profile' %}"
+          <a href="{% url 'admin-doctor-appointment-list' %}"
             class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-user"></i>
@@ -93,7 +93,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'patient-profile' %}"
+          <a href="{% url 'pending-card' %}"
             class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-id-card-o"></i>
@@ -102,7 +102,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'patient-profile' %}"
+          <a href="{% url 'all-card' %}"
             class="nav-link {% if url_name == 'patient-dashboard' %}active {% endif %}">
             <p class="h6">
               <i class="t-nav-icon nav-icon fa fa-id-card-o"></i>
@@ -111,9 +111,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'patient-change-password' %}" class="nav-link">
+          <a href="{% url 'admin-profile' %}" class="nav-link">
             <i class="t-nav-icon nav-icon fa fa-credit-card"></i>
-            <p class="h6">Change password</p>
+            <p class="h6">Profile</p>
           </a>
         </li>
         <li class="nav-item">
