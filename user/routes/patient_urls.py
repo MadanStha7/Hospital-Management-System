@@ -18,7 +18,8 @@ from user.viewsets.patient_views import (
     ApplyCard,
     card_confirm,
     CardView,
-    ContactView
+    ContactView,
+    HospitalRegisterView
 )
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     path("register-type/", RegisterTypeView.as_view(), name="register-type"),
     path("patient-register/", PatientRegisterView.as_view(), name="patient-register"),
     path("doctor-register/", DoctorRegisterView.as_view(), name="doctor-register"),
+    path("hospital-register/", HospitalRegisterView.as_view(), name="hospital-register"),
     path("logout/", Logout, name="logout"),
     # appoinment
     path("patient-dashboard/", PatientDashboard.as_view(), name="patient-dashboard"),

@@ -25,7 +25,7 @@
           >
         </li>
       </ul>
-      <div class="tab-content" id="pills-tabContent" style="margin-left: 120px">
+      <div class="tab-content" id="pills-tabContent" style="margin-left: 90px">
         {% comment %}
         <img
           src="{% static 'user/image/register.png' %}"
@@ -35,7 +35,8 @@
         {% endcomment %}
 
         <a href="{% url 'patient-register' %}"><button class="btn btn-primary">Register as Patient</button></a>
-        <a href="{% url 'doctor-register' %}"><button class="btn btn-primary mt-5 mb-5">Register as Doctor</button></a>
+        <a href="{% url 'doctor-register' %}"><button class="btn btn-primary mt-3">Register as Doctor</button></a>
+        <a href="{% url 'hospital-register' %}"><button class="btn btn-primary mt-3 mb-3">Register as Hospital</button></a>
       </div>
     </div>
   </div>

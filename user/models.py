@@ -185,8 +185,31 @@ class Hospital(models.Model):
     biography = models.TextField(null=True)
     image = models.FileField(null=True)
 
+    def save(self, *args, **kwargs):
+        group, created = Group.objects.get_or_create(name="Hospital")
+        self.user.groups.add(group)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        ordering = ["-id"]
+
+
+class Hospital_Appointment(models.Model):
+    STATUS = (
+        ("P", "Pending"),
+        ("A", "Approve"),
+    )
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    a_date = models.DateField(null=True)
+    a_timing = models.CharField(max_length=100, null=True)
+    status = models.CharField(choices=STATUS, max_length=2, null=True, blank=True)
+
+    def str(self):
+        return f"Appointed with {self.hospital.name}-- by {self.patient.full_name}"
 
     class Meta:
         ordering = ["-id"]
