@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, CreateView, FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-from user.forms import PatientForm, DoctorForm, UserLoginForm, PatientEditFormView
+from user.forms import PatientForm, DoctorForm, UserLoginForm, PatientEditFormView, HospitalForm
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -53,6 +53,8 @@ class LoginView(FormView):
                 return HttpResponseRedirect(reverse_lazy("doctor-dashboard"))
             elif user.groups.filter(name="Patient"):
                 return HttpResponseRedirect(reverse_lazy("patient-dashboard"))
+            elif user.groups.filter(name="Hospital"):
+                return HttpResponseRedirect(reverse_lazy("hospital-dashboard"))
             elif self.request.user.is_superuser:
                 return HttpResponseRedirect(reverse_lazy("admin-dashboard"))
             else:
@@ -125,6 +127,35 @@ class DoctorRegisterView(CreateView):
             user_form = form
             context = {"form": user_form}
         return render(request, "user/doctor-register.html", context)
+    
+class HospitalRegisterView(CreateView):
+    """
+    View to store the details of hospital
+    """
+
+    template_name = "user/hospital-register.html"
+    form_class = HospitalForm
+    success_url = reverse_lazy("login")
+
+    @transaction.atomic
+    def post(self, request):
+        form = HospitalForm(request.POST, request.FILES)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            pword = form.cleaned_data["password"]
+            user_obj = User.objects.create_user(
+                email=email, username=email, password=pword
+            )
+            user = form.save(commit=False)
+            user.user = user_obj
+            user.save()
+            messages.success(request, "User has been successfully Created")
+            return redirect("login")
+
+        else:
+            user_form = form
+            context = {"form": user_form}
+        return render(request, "user/hospital-register.html", context)
 
 
 def Logout(request):

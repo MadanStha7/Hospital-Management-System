@@ -1,0 +1,60 @@
+{% extends 'layout/admin/base.html' %}
+<!-- load -->
+{% load static %}
+<!-- title -->
+{% block static %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">{% endblock %}
+
+{% block title %}Update Profile{% endblock %}
+<!-- content -->
+{% block content %}
+
+<div class="container-fluid  bg-white mt-5 mb-5">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="col-md-8" style="margin-left:100px;">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Update Profile</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Hospital Name</label>{{form.name}}</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Mobile</label>{{form.mobile}} </div>
+                    <div class="col-md-6"><label class="labels">No of Doctors</label> {{ form.no_of_doctor }} </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">No of Beds</label> {{ form.no_of_beds }} </div>
+                    <div class="col-md-6"><label class="labels">Foundation Date</label> {{ form.foundation_date }} </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Timing</label> {{ form.timing }} </div>
+                    <div class="col-md-6"><label class="labels">Owner Name</label> {{ form.owner_name }} </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Profile Image</label> {{ form.image }} </div>
+                    <div class="col-md-6"><label class="labels">Days</label> {{ form.days }} </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Biography</label> {{ form.biography }} </div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-success profile-button">Save
+                        Changes</button></div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
+{% block script%}
+
+<script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js" charset="utf-8"></script>
+<script>
+    $(document).ready(function () {
+        $('#data-table').DataTable();
+    });
+</script>
+{% endblock %}

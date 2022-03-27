@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models import fields
-from .models import Appointment, Patient, Doctor, Prescription
+from .models import Appointment, Hospital, Patient, Doctor, Prescription
 from django.forms import ValidationError
 from django.forms import DateInput
 from django.contrib.auth import get_user_model
@@ -175,9 +175,11 @@ class DoctorProfileForm(forms.ModelForm):
 
 
 class PrescriptionCreateForm(forms.ModelForm):
-    def __init__(self,user, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(PrescriptionCreateForm, self).__init__(*args, **kwargs)
-        self.fields["appointement"].queryset = Appointment.objects.filter(doctor__user=user)
+        self.fields["appointement"].queryset = Appointment.objects.filter(
+            doctor__user=user
+        )
 
     class Meta:
         model = Prescription
@@ -196,4 +198,103 @@ class PrescriptionCreateForm(forms.ModelForm):
             "days": forms.TextInput(attrs={"class": "form-control"}),
             "time": forms.TextInput(attrs={"class": "form-control"}),
             "price": forms.TextInput(attrs={"class": "form-control"}),
+        }
+
+
+class HospitalForm(forms.ModelForm):
+    email = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+    mobile = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+
+    address = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    no_of_doctor = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    no_of_beds = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    foundation_date = forms.DateField(
+        widget=forms.DateInput(attrs={"class": "form-control", "type": "date"})
+    )
+    timing = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    owner_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    days = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    biography = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    image = forms.FileField(widget=forms.FileInput(attrs={"class": "form-control"}))
+
+    class Meta:
+        model = Hospital
+        fields = [
+            "email",
+            "password",
+            "confirm_password",
+            "mobile",
+            "name",
+            "no_of_doctor",
+            "no_of_beds",
+            "foundation_date",
+            "timing",
+            "owner_name",
+            "days",
+            "address",
+            "biography",
+            "image",
+        ]
+
+        def __init__(self, *args, **kwargs):
+            super(HospitalForm, self).__init__(*args, **kwargs)
+            for field in self.fields:
+                self.fields[field].error_messages = {
+                    "required": "This Field is required"
+                }
+
+        def clean_email(self):
+            email = User.objects.filter(email=self.cleaned_data.get("email"))
+            if email.exists():
+                raise forms.ValidationError("email already exist")
+            return email
+
+        widgets = {
+            "shift": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            )
+        }
+
+class HospitalProfileForm(forms.ModelForm):
+    class Meta:
+        model = Hospital
+        fields = [
+            "name",
+            "mobile",
+            "no_of_doctor",
+            "no_of_beds",
+            "foundation_date",
+            "timing",
+            "owner_name",
+            "days",
+            "address",
+            "biography",
+            "image",
+        ]
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "mobile": forms.TextInput(attrs={"class": "form-control"}),
+            "no_of_doctor": forms.TextInput(attrs={"class": "form-control"}),
+            "no_of_beds": forms.TextInput(attrs={"class": "form-control"}),
+            "foundation_date": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+            "timing": forms.TextInput(attrs={"class": "form-control"}),
+            "owner_name": forms.TextInput(attrs={"class": "form-control"}),
+            "days": forms.TextInput(attrs={"class": "form-control"}),
+            "address": forms.TextInput(attrs={"class": "form-control"}),
+            "biography": forms.Textarea(attrs={"class": "form-control"}),
+            "image": forms.FileInput(attrs={"class": "form-control"}),
         }

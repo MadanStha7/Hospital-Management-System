@@ -1,77 +1,77 @@
 {% load static %} {% load auth_extras %}
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top">
-  {% if messages %}
-  <ul id="messages">
-    {% for message in messages %}
-    <div class="alert alert-info success-message" role="alert">
-      {{ message }}
-    </div>
-    {% endfor %}
-  </ul>
-  {% endif %}
+    {% if messages %}
+    <ul id="messages">
+        {% for message in messages %}
+        <div class="alert alert-info success-message" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
-  <div class="container d-flex align-items-center">
-    <h1 class="logo me-auto">
-      <a href="{% url 'home' %}">Doctor Finder</a>
-    </h1>
-    <!-- Uncomment below if you prefer to use an image logo -->
-    <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    <div class="container d-flex align-items-center">
+        <h1 class="logo me-auto">
+            <a href="{% url 'home' %}">Doctor Finder</a>
+        </h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-    <nav id="navbar" class="navbar order-last order-lg-0">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-        <!-- <li><a class="nav-link scrollto" href="#about">Doctors</a></li>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                <!-- <li><a class="nav-link scrollto" href="#about">Doctors</a></li>
             <li><a class="nav-link scrollto" href="#services">Patients</a></li>
             <li><a class="nav-link scrollto" href="#departments">Pages</a></li>
             <li><a class="nav-link scrollto" href="#doctors">Admin</a></li> -->
-        <li class="dropdown">
-          <a href="#"
-            ><span>Doctors</span> <i class="bi bi-chevron-down"></i
-          ></a>
-          <ul>
-            <li><a href="#">Drop Down 1</a></li>
-            <li><a href="#">Drop Down 2</a></li>
-            <li><a href="#">Drop Down 3</a></li>
-            <li><a href="#">Drop Down 4</a></li>
-          </ul>
-        </li>
+                <li class="dropdown">
+                    <a href="#"><span>Doctors</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="#">Drop Down 1</a></li>
+                        <li><a href="#">Drop Down 2</a></li>
+                        <li><a href="#">Drop Down 3</a></li>
+                        <li><a href="#">Drop Down 4</a></li>
+                    </ul>
+                </li>
 
-        <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a></li>
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
-    <!-- .navbar -->
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <!-- .navbar -->
 
+        <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span>
+            Appointment</a>
 
-    {% if request.user.is_authenticated %}
-    <span class="appointment-btn scrollto">
-      {% if request.user|has_group:"Patient" %} 
-        <a href="{% url 'patient-dashboard' %}"><span class="d-none d-md-inline text-white">{{request.user.patient.full_name}}</span></a>
-      {% elif request.user|has_group:"Doctor" %}
-      <a href="{% url 'doctor-dashboard' %}"><span class="d-none d-md-inline text-white">{{request.user.doctor.full_name}}</span></a>
-      {% else %}
-      <p>admin</p>
+        {% if request.user.is_authenticated %}
+        <span class="appointment-btn scrollto">
+            {% if request.user|has_group:"Patient" %}
+            <a href="{% url 'patient-dashboard' %}"><span
+                    class="d-none d-md-inline text-white">{{request.user.patient.full_name}}</span></a>
+            {% elif request.user|has_group:"Doctor" %}
+            <a href="{% url 'doctor-dashboard' %}"><span
+                    class="d-none d-md-inline text-white">{{request.user.doctor.full_name}}</span></a>
+            {% elif request.user|has_group:"Hospital" %}
+            <a href="{% url 'hospital-dashboard' %}"><span
+                    class="d-none d-md-inline text-white">Dashboard</span></a>
+            {% else %}
+            <p>admin</p>
 
-      {% endif %}
-    </span>
-    <a href="{% url 'logout' %}" class="appointment-btn scrollto"
-      ><span class="d-none d-md-inline">Logout</span></a
-    >
-    {% else %}
-    <a href="{% url 'login' %}" class="appointment-btn scrollto"
-      ><span class="d-none d-md-inline">Log In</span></a
-    >
-    <a href="{% url 'register-type' %}" class="appointment-btn scrollto"
-      ><span class="d-none d-md-inline">Register</span></a
-    >
-    {% endif %}
-  </div>
+            {% endif %}
+        </span>
+        <a href="{% url 'logout' %}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Logout</span></a>
+        {% else %}
+        <a href="{% url 'login' %}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Log In</span></a>
+        <a href="{% url 'register-type' %}" class="appointment-btn scrollto"><span
+                class="d-none d-md-inline">Register</span></a>
+        {% endif %}
+    </div>
 </header>
 <script>
-  var message_ele = document.getElementById("messages");
-  setTimeout(function () {
-    message_ele.style.display = "none";
-  }, 3000);
+    var message_ele = document.getElementById("messages");
+    setTimeout(function () {
+        message_ele.style.display = "none";
+    }, 3000);
 </script>
 <!-- End Header -->

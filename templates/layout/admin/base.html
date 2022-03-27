@@ -26,11 +26,13 @@
 <body class="hold-transition sidebar-mini" id="trimestersdata">
     <div class="wrapper">
         {% if request.user.is_authenticated and request.user|has_group:"Patient"%}
-            {% include 'patient/patient-header.html' %}
+        {% include 'patient/patient-header.html' %}
         {% elif request.user.is_authenticated and request.user|has_group:"Doctor" %}
-            {% include 'doctor/doctor-header.html' %}
+        {% include 'doctor/doctor-header.html' %}
+        {% elif request.user.is_authenticated and request.user|has_group:"Hospital" %}
+        {% include 'hospital/hospital-header.html' %}
         {% elif request.user.is_superuser %}
-            {% include 'admin/admin-header.html' %}
+        {% include 'admin/admin-header.html' %}
         {% endif %}
 
         <!-- Content Wrapper. Contains page content -->
