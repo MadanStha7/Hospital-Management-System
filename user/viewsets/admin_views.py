@@ -13,6 +13,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from user.decorators import LoginRequiredMixin
+from datetime import timedelta
 
 User = get_user_model()
 
