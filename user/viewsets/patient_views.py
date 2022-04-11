@@ -4,7 +4,13 @@ from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, CreateView, FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-from user.forms import PatientForm, DoctorForm, UserLoginForm, PatientEditFormView, HospitalForm
+from user.forms import (
+    PatientForm,
+    DoctorForm,
+    UserLoginForm,
+    PatientEditFormView,
+    HospitalForm,
+)
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -127,7 +133,8 @@ class DoctorRegisterView(CreateView):
             user_form = form
             context = {"form": user_form}
         return render(request, "user/doctor-register.html", context)
-    
+
+
 class HospitalRegisterView(CreateView):
     """
     View to store the details of hospital
@@ -304,5 +311,5 @@ class CardView(LoginRequiredMixin, TemplateView):
     template_name = "patient/card/card-view.html"
 
 
-class ContactView(LoginRequiredMixin, TemplateView):
+class ContactView(TemplateView):
     template_name = "user/contact.html"
