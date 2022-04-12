@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, View, DetailView
 from django.db import transaction
-from user.models import Patient, Doctor, Appointment, Prescription
+from user.models import Billing_Record, Patient, Doctor, Appointment, Prescription
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
@@ -306,3 +306,20 @@ class CardView(LoginRequiredMixin, TemplateView):
 
 class ContactView(LoginRequiredMixin, TemplateView):
     template_name = "user/contact.html"
+
+
+class BillingView(LoginRequiredMixin, TemplateView):
+    template_name = "patient/billing.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["billing_list"] = Billing_Record.objects.filter(
+            appoint__patient__user=self.request.user
+        )
+        return context
+
+
+class BillingDetailView(LoginRequiredMixin, DetailView):
+    model = Billing_Record
+    template_name = "patient/billing-detail.html"
+    context_object_name = "billing"

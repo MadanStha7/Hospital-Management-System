@@ -19,7 +19,9 @@ from user.viewsets.patient_views import (
     card_confirm,
     CardView,
     ContactView,
-    HospitalRegisterView
+    HospitalRegisterView, 
+    BillingView,
+    BillingDetailView
 )
 
 urlpatterns = [
@@ -45,6 +47,13 @@ urlpatterns = [
     ),
     # patient profile
     path("patient-profile/", patient_profile, name="patient-profile"),
+    # patient billing
+    path("patient-billing/", BillingView.as_view(), name="patient-billing"),
+    path(
+        "patient-billing/bill/<int:pk>",
+        BillingDetailView.as_view(),
+        name="patient-bill-detail",
+    ),
     # change password
     path(
         "patient-change-password",
