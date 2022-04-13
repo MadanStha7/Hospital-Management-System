@@ -1,0 +1,104 @@
+{% extends 'layout/admin/base.html' %}
+<!-- load -->
+{% load static %}
+<!-- title -->
+<style>
+    @media print { 
+   /* All your print styles go here */
+   #hide-for-print { display: none !important; } 
+}
+
+</style>
+{% block title %}Billing{% endblock %}
+<!-- content -->
+{% block content %}
+{% if messages %}
+  <ul id="messages-appointment">
+    {% for message in messages %}
+    <div class="alert alert-info success-message" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+  </ul>
+  {% endif %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="content-title">Billing</h5>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Appointment</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <div class="p-3 bg-white rounded">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="text-uppercase"><b>Billing Details</b></h5>
+                        <div class="billed"><span class="text-uppercase">Dr. {{billing.appoint.doctor.full_name}}</div>
+                        <div class="billed"><span class="text-uppercase">Appointment Date:</span><span class="ml-1">{{billing.appoint.app_date}}</span></div>
+                        <div class="billed"><span class="text-uppercase">Order ID:</span><span class="ml-1">#1345345</span></div>
+                    </div>
+                    <div class="col-md-6 text-right mt-3">
+                        <h5 class="text-uppercase"><b>billing To</b></h5>
+                        <h4 class="text-danger mb-0">{{billing.appoint.patient.full_name}}</h4>
+                        <h4 class="text-danger mb-0">{{billing.appoint.patient.phone}}</h4>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Doctor Name</th>
+                                    <th>Appointment Date</th>
+                                    <th>title</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>{{billing.appoint.doctor.full_name}}</td>
+                                    <td>{{billing.appoint.app_date}}</td>
+                                    <td>{{billing.title}}</td>
+                                    <td>{{billing.amount}}</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-right mb-3"><a class="hide-for-print"><button class="btn btn-danger btn-sm mr-5" type="button" onclick="window.print()">Print</button></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function printArticle(divId) {
+        const originalHTML = document.body.innerHTML;
+        document.body.innerHTML = document.getElementById(divId).innerHTML;
+        document.querySelectorAll('img')
+            .forEach(img => img.remove())
+        window.print();
+        document.body.innerHTML = originalHtml;
+        }
+
+</script>
+{% endblock %}

@@ -213,3 +213,12 @@ class Hospital_Appointment(models.Model):
 
     class Meta:
         ordering = ["-id"]
+
+class Billing_Record(models.Model):
+    appoint = models.ForeignKey(Appointment,on_delete=models.CASCADE,null=True,blank=True)
+    title = models.CharField(max_length=100,null=True,blank=True)
+    amount = models.IntegerField(null=True,blank=True)
+
+    def __str__(self):
+        return f"Appointed with {self.appoint.doctor.full_name}-- by {self.appoint  .patient.full_name}"
+        
